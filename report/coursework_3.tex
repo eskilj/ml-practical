@@ -14,6 +14,11 @@
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 
+\usepackage{amsmath}
+
+\usepackage{booktabs}
+\usepackage[font={small,it}]{caption}
+
 \begin{document}
 
 \maketitle
@@ -33,9 +38,15 @@ How does the number of hidden layer and hidden units affect the training of a de
 
 \subsection{The Core Model}
 
-A simple three-layer model with was chosen for this study. The weights for the fully connected layers were initialized by a random distribution, using the tf.truncated\_normal function from TensorFlow. Then the biases are initialized with tf.zeros to ensure they start with all zero values, and their shape is simply the number of units in the layer to which they connect. In addition, L2 Regularisation, with penalty term 0.0001, was used with each affine layer. A simple schematic representation of the model can be seen in Figure \ref{part1-model}.
+A simple three-layer model, interleaved with non-linear transformations, was chosen as a basis for this study. 
 
-The model was trained on image classification, using labelled images from the CIFAR-10 data set. To accommodate the CIFAR-10 image size of 32x32, and three color channels, the model's input dimension was 3x1024. Furthermore the model used hidden layers of dimension 200, and a 10 dimensional softmax output layer. A cross entropy error function was used with the model.
+Why?
+
+To investigate the aforementioned questions, only specific aspects of the model, or training procedure, were changed during the experimentation. 
+
+The weights for the fully connected layers were initialized by a random distribution, using the tf.truncated\_normal function from TensorFlow. Then the biases are initialized with tf.zeros to ensure they start with all zero values, and their shape is simply the number of units in the layer to which they connect. A simple schematic representation of the model can be seen in Figure \ref{part1-model}.
+
+The model was trained on image classification, using labeled images from the CIFAR-10 data set. To accommodate the CIFAR-10 image size of 32x32, and three color channels, the model's input dimension was 3x32x32. Furthermore the model used hidden layers of dimension 200, and a 10 dimensional output layer (10 classes). A cross entropy error function was used with the model, which was implemented using  \texttt{softmax\_cross\_entropy\_with\_logits} from TensorFlow.
 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{model_1}
@@ -49,57 +60,27 @@ elu
 sigmoid
 tanh
 
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}
-	\begin{axis}[
-	axis lines = left,
-	xlabel = $x$,
-	ylabel = {$f(x)$},
-	xmin=-4, xmax=4,
-	ymin=-2, ymax=3,
-	]
-	\addplot[color=red]{max(0, x)};
-	\end{axis}
-	\end{tikzpicture}
-	\begin{tikzpicture}
-	\begin{axis}[
-	axis lines = left,
-	xlabel = $x$,
-	ylabel = {$f(x)$},
-	xmin=-4, xmax=4,
-	ymin=-2, ymax=3,
-	]
-	\addplot[color=blue]{tanh(x)};
-	\end{axis}
-	\end{tikzpicture}
-	\begin{tikzpicture}
-	\begin{axis}[
-	axis lines = left,
-	xlabel = $x$,
-	ylabel = {$f(x)$},
-	xmin=-4, xmax=4,
-	ymin=-2, ymax=3,
-	]
-	\addplot[color=brown]{1/(1+e^(-x))};
-	\end{axis}
-	\end{tikzpicture}
-	\caption{Showing the plots of the transformation functions. Left: Relu. Middle: Tanh. Right: Sigmoid.}
-	\label{part1-plots}
-\end{figure}
-
 
 \subsection{The Experiments}
 
 
 \subsubsection{Activation Functions}
 
-Three non-linear transformation functions were compared. The logistic sigmoid $f(x)=\frac{1}{1+e^{-x}}$, the hyperbolic tangent $f(x)=tanh(x)$ and the rectified linear (ReLu) $f(x)=max(0,x)$.
+Three non-linear transformation functions were compared. The logistic sigmoid $f(x)=\frac{1}{1+e^{-x}}$, the hyperbolic tangent $f(x)=tanh(x)$ the rectified linear (ReLu) $f(x)=max(0,x)$ and the exponential linear unit (ELU):
+
+\begin{equation} \label{eq:elu}
+f(x) = \begin{cases}
+x &\text{if x > 0}
+\end{cases}
+\end{equation}
+
+where \(\alpha\) is a hyperparameter that decides the range of negative values for which the activation function saturates.
 
 \begin{figure}[h]
 	\centering
 	\begin{tikzpicture}
 	\begin{axis}[
+	width=0.4\textwidth,
 	axis lines = left,
 	xlabel = $x$,
 	ylabel = {$f(x)$},
@@ -111,6 +92,7 @@ Three non-linear transformation functions were compared. The logistic sigmoid $f
 	\end{tikzpicture}
 	\begin{tikzpicture}
 	\begin{axis}[
+	width=0.4\textwidth,
 	axis lines = left,
 	xlabel = $x$,
 	ylabel = {$f(x)$},
@@ -122,6 +104,7 @@ Three non-linear transformation functions were compared. The logistic sigmoid $f
 	\end{tikzpicture}
 	\begin{tikzpicture}
 	\begin{axis}[
+	width=0.4\textwidth,
 	axis lines = left,
 	xlabel = $x$,
 	ylabel = {$f(x)$},
@@ -131,7 +114,20 @@ Three non-linear transformation functions were compared. The logistic sigmoid $f
 	\addplot[color=brown]{1/(1+e^(-x))};
 	\end{axis}
 	\end{tikzpicture}
-	\caption{Showing the plots of the transformation functions. Left: Relu. Middle: Tanh. Right: Sigmoid.}
+	\begin{tikzpicture}
+	\begin{axis}[
+	width=0.4\textwidth,
+	axis lines = left,
+	xlabel = $x$,
+	ylabel = {$f(x)$},
+	xmin=-4, xmax=4,
+	ymin=-2, ymax=3,
+	]
+	\addplot[color=green, domain=-4:0]{e^(x)-1};
+	\addplot[color=green, domain=0:4]{x};
+	\end{axis}
+	\end{tikzpicture}
+	\caption{Showing the plots of the activation functions. Top Left: Relu. Top Right: Tanh. Bottom Light: Sigmoid. Bottom Right: ELU}
 	\label{part1-plots}
 \end{figure}
 
@@ -139,7 +135,7 @@ Both the hyperbolic tangent and the sigmoid functions compress their input value
 
 The ReLu transformation function looks and behaves quite differently from the two before mentioned alternatives, see Figure \ref{part1-plots}. The ReLu function has a constant gradient of 1 for activations greater than zero, and it will not suffer from diminishing gradients. It can however kill all the units, by responding to everything with 0. Furthermore, as it is unbounded, it will be more sensitive to learning rates than the sigmoid and hyperbolic tangent.
 
-In addition to ReLu, the Exponential Linear Unit (ELU), was also tested \cite{elu}. 
+In addition to ReLu, the Exponential Linear Unit (ELU), was also tested \cite{elu}. In contrast to ReLUs, ELUs have negative values which pushes the mean of the activations closer to zero. Mean activations that are closer to zero enable faster learning as they bring the gradient closer to the natural gradient.
 
 ELU
 
@@ -174,7 +170,10 @@ The model was trained for 40 epochs, or 32,000 steps, with batch size of 50, for
 
 \section{Results and Discussion}
 
-\subsubsection{Activation F}
+\subsection{Activation Functions}
+
+After the model was trained with all the activation functions, the ELU performed significantly better than the other activation functions. The final classification error for ELU was 0.96, whereas the hyperbolic tangent performed worst with a final classification error of 1.58, see Figure \ref{res-activ}. The training with ReLu and sigmoid showed similar results. 
+
 
 \begin{figure}[h]
 	\centering
@@ -182,41 +181,60 @@ The model was trained for 40 epochs, or 32,000 steps, with batch size of 50, for
 	\begin{axis}[
 	width=0.8\textwidth,
 	axis lines = left,
-	xlabel = {Epoch Number},
+	xlabel = {Step},
 	ylabel = {Error},
-	xmin=0, xmax=100,
-	ymin=0, ymax=0.4,
+	xmin=0, xmax=32000,
+	ymin=0.9, ymax=2.1,
 	legend pos=outer north east
 	]
-	
+		\addplot[color=red,mark=*]
+	coordinates {
+		(4000, 1.59)(8000, 1.44)(12000, 1.36)(16000, 1.31)(20000, 1.26)(24000, 1.23)(28000, 1.2)
+	};
+	\addlegendentry{relu};
 	\addplot[color=blue,mark=*]
 	coordinates {
-		(5, 2.71e-01)(10, 2.09e-01)(30, 9.97e-02)(35, 8.71e-02)(40, 7.62e-02)(60, 4.79e-02)(100, 2.21e-02)
+	(4000, 1.84)(8000, 1.75)(12000, 1.7)(16000, 1.66)(20000, 1.64)(24000, 1.6)(28000, 1.58)
 	};
-	\addlegendentry{tanh (train)};
-	\addplot[dashed, color=blue!70,mark=diamond*]
+	\addlegendentry{tanh};
+	\addplot[color=green,mark=*]
 	coordinates {
-		(5, 2.53e-01)(10, 2.01e-01)(30, 1.15e-01)(35, 1.07e-01)(40, 9.99e-02)(60, 8.57e-02)(100, 7.78e-02)
-	};
-	\addlegendentry{tanh (valid)};
+	(4000, 1.57)(8000, 1.36)(12000, 1.24)(16000, 1.14)(20000, 1.08)(24000, 1.0)(28000, 0.96)
+};
+	\addlegendentry{ELU};
 	
 	\addplot[color=brown,mark=*]
 	coordinates {
-		(5, 1.03e+00)(10, 5.57e-01)(30, 3.14e-01)(35, 2.96e-01)(40, 2.82e-01)(60, 2.35e-01)(100, 1.74e-01)
-	};
-	\addlegendentry{sigmoid (train)};
-	\addplot[dashed, color=brown!70,mark=diamond*]
-	coordinates {
-		(5, 9.97e-01)(10, 5.19e-01)(30, 2.92e-01)(35, 2.76e-01)(40, 2.63e-01)(60, 2.22e-01)(100, 1.70e-01)
-	};
-	\addlegendentry{sigmoid (valid)};
+	(4000, 1.65)(8000, 1.53)(12000, 1.45)(16000, 1.39)(20000, 1.34)(24000, 1.29)(28000, 1.24)
+};
+	\addlegendentry{sigmoid};
 	
 	\end{axis}
 	\end{tikzpicture}
 	
-	\caption{Showing the evolution of the error function values across the training epochs, for the momentum learning rule.}
-	\label{part1-error}
+	\caption{Showing the evolution of the error function values across the training steps, for the different activation functions.}
+	\label{res-activ}
 \end{figure}
+
+Based on the results presented here, it is clear that the ELU activation function outperformed the other three. As the first use of the ELU was published quite recently, it is interesting to how well the it works. Although the network used in this experiment was quite simple, the findings are consistent with those of the original publishers \cite{elu}. 
+
+ hyperbolic tangent should be chosen before the sigmoid transformation function. The sigmoid and the tanh have similar shapes, and both suffer from the same problem of diminishing gradient. Therefore, if the hyperbolic tangent produces significantly better results, there should not be any good reasons to use the sigmoid over tanh (when training a similar model to the one used in these trials).
+
+The ReLu and the hyperbolic tangent performed very similarly. Having to choose between the two is more difficult, but taking into account that the ReLu is computationally more efficient, that should break the tie. However, in other scenarios with different models or learning rules, an initial trial using both non-linear functions is advisable.
+
+\begin{table}[]
+	\centering
+	\caption{Displaying the final classification accuracies for the activation functions.}
+	\label{part1-table}
+	\begin{tabular}{@{}lcc@{}}
+		\toprule
+		\multicolumn{1}{c}{} & Final training set accuracy & Final validation set accuracy \\ \midrule
+		ELU & 0.669 & 0.505 \\
+		ReLu & 0.553 & 0.483 \\
+		Sigmoid & 0.537 & 0.481 \\
+		Tanh & 0.472 & 0.401 \\ \bottomrule
+	\end{tabular}
+\end{table}
 
 
 \begin{figure}[h]
@@ -296,6 +314,8 @@ The model was trained for 40 epochs, or 32,000 steps, with batch size of 50, for
 \section{Conclusion}
 
 \section{Future Work}
+
+Convolutional neural network, drop out, max pool
 
 \clearpage
 \medskip
