@@ -61,6 +61,7 @@ def train():
 
     # Get images and labels for CIFAR-10.
     images, labels = cifar10.distorted_inputs()
+    print(labels)
 
     # Build a Graph that computes the logits predictions from the
     # inference model.

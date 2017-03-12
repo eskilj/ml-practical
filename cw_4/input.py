@@ -1,0 +1,40 @@
+import tensorflow as tf
+from mlp.data_providers import CIFAR10DataProvider
+
+FLAGS = tf.app.flags.FLAGS
+tf.app.flags.DEFINE_integer('batch_size', 50,
+                            """Number of images to process in a batch.""")
+
+
+def inputs():
+    """
+    Load data from Data Provider
+
+    Returns:
+      train_data: Training Data
+      valid_data: Validation Data
+    """
+
+    train_data = CIFAR10DataProvider('train', batch_size=FLAGS.batch_size)
+    valid_data = CIFAR10DataProvider('valid', batch_size=FLAGS.batch_size)
+    return train_data, valid_data
+
+
+def __pre_process_single(img):
+    """
+    Image processing
+    :param img: Input image to be distorted
+    :return:
+    """
+
+    img = tf.image.random_flip_left_right(img)
+    img = tf.image.random_brightness(img, max_delta=63)
+    img = tf.image.random_contrast(img, lower=0.2, upper=1.8)
+
+    return img
+
+
+def pre_process(images):
+    images = tf.map_fn(lambda image: __pre_process_single(image), images)
+
+    return images
