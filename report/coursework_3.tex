@@ -1,8 +1,8 @@
 \documentclass[]{article}
 
 %opening
-\title{Planning and Risks}
-\author{Exam Number: B032374}
+\title{MLP Coursework 3}
+\author{Eskil Joergensen}
 \date{\today}
 
 \usepackage[parfill]{parskip}
@@ -26,13 +26,8 @@
 \section{Introduction}
 
 
-Investigate the effect of activation function on a multi-layer neural network.
-
-This part of the report investigates how the choice of activation function affectstraining set performance of a small multi-layer model. Three transformation functions withdifferent characteristics were tested and evaluated.
-Additionally
-
-How does the number of hidden layer and hidden units affect the training of a deep neural network?
-
+The report aims to investigate, present and discuss three simple questions:
+How does the choice of activation function affect the performance of a multi-layer neural network? How does the number of hidden layer and hidden units affect the training of a deep neural network? Can a learning rate scheduler increase the performance of a simple feed-forward network? Using a simple model, CIFAR-10 image classification and TensorFlow, a number of small experiments related to the training of deep neural networks.
 
 
 \section{Methodology}
@@ -130,7 +125,7 @@ where \(\alpha\) is a hyperparameter that decides the range of negative values f
 	\label{part1-plots}
 \end{figure}
 
-Both the hyperbolic tangent and the sigmoid functions compress their input values between (-1, 1) and (0, 1) respectively. A result of such saturation will cause their gradients to approach zero, which means smaller parameter changes and slower training. Two key differences between the two are that the hyperbolic tangent allows for both positive and negative outputs, and that the hyperbolic tangent is centered around zero. The sigmoid transformation function is centered around 0.5, which is not ideal when training models.
+Both the hyperbolic tangent and the sigmoid functions compress their input values between (-1, 1) and (0, 1) respectively. A result of such saturation will cause their gradients to approach zero, which means smaller parameter changes and slower training. Two key differences between the two are that the hyperbolic tangent allows for both positive and negative outputs, and that the hyperbolic tangent is centered around zero. The sigmoid transformation function is centered around 0.5, which may not be ideal.
 
 The ReLu transformation function looks and behaves quite differently from the two before mentioned alternatives, see Figure \ref{part1-plots}. The ReLu function has a constant gradient of 1 for activations greater than zero, and it will not suffer from diminishing gradients. It can however kill all the units, by responding to everything with 0. Furthermore, as it is unbounded, it will be more sensitive to learning rates than the sigmoid and hyperbolic tangent.
 
@@ -140,9 +135,11 @@ The four activation functions were used in turn to train the three-layer model p
 
 \subsubsection{Hidden Layers}
 
-depths 1 2 4 5
-widths 50 100 200 400
+The second experiment involved investigating how the arrangement of hidden layers and hidden units would effect the performance of the training of a model. A series of depths and widths were tested using two nested loops. 
 
+The main obstruction was creating a system that would dynamically allocate the desired number of hidden layers in the model. A dictionary was used to store the fully connected layers by their respective TensorFlow name scope identifiers. As the number of hidden units was the same for all the hidden layers, it was easily implemented. 
+
+A number of combinations of hidden units and layers were integrated into the base model. The number of hidden layers tested in the model were 1, 2 and 4, combined with 50, 100, 200 and 400 hidden units. 
 
 \subsubsection{Learning Rate Schedules}
 
@@ -150,24 +147,24 @@ The third experiment investigates the implementation of a time-dependent learnin
 \begin{equation} \label{eq:1}
 \eta(t) = \eta_{0} \gamma ^{(t / t_{decay})}
 \end{equation}
-where \(\eta(t)\) is the learning rate after t steps, \(\eta_{0}\) the initial learning rate and \(\gamma\) is the decay rate. \(t_{decay}\) is the number of steps required for one decay-cycle. The value of \(\gamma\) and \(t_{decay}\) determine the rate of decay of the learning rate. 
+where \(\eta(t)\) is the learning rate after t steps, \(\eta_{0}\) the initial learning rate and \(\gamma\) is the decay rate. \(t_{decay}\) is the number of steps required for one decay-cycle. The value of \(\gamma\) and \(t_{decay}\) determine the rate of decay of the learning rate. For the learning rate experiments, the \texttt{GradientDescentOptimizer} replaced the Adam optimizer.
 
-The learning schedule was implemented using already built functionality from TensorFlow. The optimiser updates the step, which changes the learning rate, which goes back into the optimiser.  The tf.train.exponential\_decay
+The learning schedule was implemented using already built functionality from TensorFlow. In addition to minimizing the training error, the optimizer can also be used to control the learning rate, see Figure \ref{model_2}. The optimizer iterates over the steps taken, which changes the learning rate as the training progresses. TensorFlow offers a number of learning rate schedulers, in this investigation the exponential version, \texttt{tf.train.exponential\_decay}, was used. 
 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{model_2}
-	\caption{Showing a visual representation of the learning rate schedule, from TensorBoard.}
+	\caption{Showing a schematic representation of how the learning rate is updated within the graph, from TensorBoard.}
 	\label{model_2}
 	\centering
 \end{figure}
 
-The decay rate and the decay steps were only changed during some initial testing, and were set to 0.96 and 10,000 respectively. The initial learning rates used were 0.02, 0.03, 0.05, 0.07 and 0.1. 
+The decay rate and the decay steps were only changed during some initial testing, and were set to 0.96 and 10,000 respectively. The initial learning rates used were 0.005, 0.02, 0.025, 0.03, 0.05, 0.07 and 0.1. 
 
 \section{Results and Discussion}
 
 \subsection{Activation Functions}
 
-After the model was trained with all the activation functions, the ELU performed significantly better than the other activation functions. The final classification error for ELU was 0.96, whereas the hyperbolic tangent performed worst with a final classification error of 1.58, see Figure \ref{res-activ}. The training with ReLu and sigmoid showed similar results. 
+After the model was trained with all the activation functions, the ELU performed significantly better than the other activation functions, see Figure \ref{res-activ}. The final classification error for ELU was 0.96, whereas the hyperbolic tangent performed worst, with a final classification error of 1.58. The training with ReLu and sigmoid showed similar results. 
 
 
 \begin{figure}[h]
@@ -211,14 +208,6 @@ After the model was trained with all the activation functions, the ELU performed
 	\label{res-activ}
 \end{figure}
 
-Based on the results presented here, it is clear that the ELU activation function outperformed the other three. As the first use of the ELU was published quite recently, it is interesting to how well the it works. Although the network used in this experiment was quite simple, the findings are consistent with those of the original publishers \cite{elu}. 
-
-
-
- hyperbolic tangent should be chosen before the sigmoid transformation function. The sigmoid and the tanh have similar shapes, and both suffer from the same problem of diminishing gradient. Therefore, if the hyperbolic tangent produces significantly better results, there should not be any good reasons to use the sigmoid over tanh (when training a similar model to the one used in these trials).
-
-The ReLu and the hyperbolic tangent performed very similarly. Having to choose between the two is more difficult, but taking into account that the ReLu is computationally more efficient, that should break the tie. However, in other scenarios with different models or learning rules, an initial trial using both non-linear functions is advisable.
-
 \begin{table}[]
 	\centering
 	\caption{Displaying the final classification accuracies for the activation functions.}
@@ -233,9 +222,72 @@ The ReLu and the hyperbolic tangent performed very similarly. Having to choose b
 	\end{tabular}
 \end{table}
 
+The results from the training errors are also reflected in the final classification accuracies, see Table \ref{part1-table}. The ReLu and the sigmoid performed very similarly. Having to choose between the two is more difficult, but taking into account that the ReLu is computationally more efficient, that should break the tie. However, in other scenarios with different models or learning rules, an initial trial using both non-linear functions is advisable.
+
+Based on the results presented here, it is clear that the ELU activation function outperformed the other three. As the first use of the ELU was published quite recently, it is interesting to see how well it performs. Although the network used in this experiment was quite simple, the findings are consistent with those of the original publishers \cite{elu}. 
+
+\subsection{Hidden layers}
+
+For the second experiment, the results were mostly very similar. In the case of a single hidden layer, no interesting level of learning was observed. With a classification accuracy around 0.08, the three trials with a single hidden layer (the non-deep networks) were dismissed. 
+
+Besides the one outsider, the training data shows a very similar performance for remaining five configurations. The two best trials were both from the models with three hidden layers, see Figure \ref{res-hidden}.
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+	\begin{axis}[
+	width=0.8\textwidth,
+	axis lines = left,
+	xlabel = {Step},
+	ylabel = {Error},
+	xmin=0, xmax=32000,
+	ymin=1.6, ymax=2.2,
+	legend pos=outer north east
+	]
+	\addplot[color=black,mark=*]
+	coordinates {
+		(4000, 1.86)(8000, 1.83)(12000, 1.817)(16000, 1.81)(20000, 1.8)(24000, 1.79)(28000, 1.8)
+	};
+	\addlegendentry{d=3, w=50};
+	\addplot[color=red,mark=*]
+	coordinates {
+		(4000, 1.93)(8000, 1.905)(12000, 1.895)(16000, 1.9)(20000, 1.88)(24000, 1.88)(28000, 1.9)
+	};
+	\addlegendentry{d=3, w=100};
+	\addplot[color=blue,mark=diamond]
+	coordinates {
+		(4000, 1.86)(8000, 1.839)(12000, 1.82)(16000, 1.8)(20000, 1.8)(24000, 1.81)(28000, 1.8)
+	};
+	\addlegendentry{d=3, w=200};
+	\addplot[color=green,mark=*]
+	coordinates {
+		(4000, 1.87)(8000, 1.86)(12000, 1.85)(16000, 1.83)(20000, 1.83)(24000, 1.82)(28000, 1.82)
+	};
+	\addlegendentry{d=5, w=50};
+	\addplot[color=brown,mark=*]
+	coordinates {
+		(4000, 2.05)(8000, 2.14)(12000, 2.2)(16000, 2.24)(20000, 2.29)(24000, 2.3)(28000, 2.304)
+	};
+	\addlegendentry{d=5, w=100};
+	\addplot[dashed, color=red,mark=*]
+	coordinates {
+		(4000, 1.89)(8000, 1.86)(12000, 1.84)(16000, 1.83)(20000, 1.825)(24000, 1.81)(28000, 1.83)
+	};
+	\addlegendentry{d=5, w=200};
+	\end{axis}
+	\end{tikzpicture}
+	
+	\caption{Showing the evolution of the error function values across the training steps, for different depths and widths of the hidden layers.}
+	\label{res-hidden}
+\end{figure}
+
+Even though the results may indicate better performance using fewer hidden layers, one must realize that additional hidden layers, may require other changes in the network or training process to benefit from the additional layers. 
 
 \subsection{Learning Rate Schedules}
 
+Seven initial learning rates were tested. However, as the trials for 0.02, 0.025 and 0.03 were visually identical, the results from 0.02 and 0.03 have been omitted from this section. Figure \ref{res-sch} shows the relevant findings.
+
+The results show that the training with the initial learning rate of 0.025 and 0.05 performed significantly better than the other initial learning rates (besides 0.02 and 0.03). As the error increases for learning rates lower than 0.025, as well as for learning rates over 0.05, it seems plausible that the optimal initial learning rate lies between 0.025 and 0.05 for the current model. 
 
 
 \begin{figure}[h]
@@ -284,67 +336,17 @@ The ReLu and the hyperbolic tangent performed very similarly. Having to choose b
 	\label{res-sch}
 \end{figure}
 
-\subsection{Hidden layers}
-
-write here
-
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}
-	\begin{axis}[
-	width=0.8\textwidth,
-	axis lines = left,
-	xlabel = {Step},
-	ylabel = {Error},
-	xmin=0, xmax=32000,
-	ymin=1.6, ymax=2.2,
-	legend pos=outer north east
-	]
-	\addplot[color=black,mark=*]
-	coordinates {
-	(4000, 1.86)(8000, 1.83)(12000, 1.817)(16000, 1.81)(20000, 1.8)(24000, 1.79)(28000, 1.8)
-	};
-	\addlegendentry{d=3, w=50};
-	\addplot[color=red,mark=*]
-	coordinates {
-		(4000, 1.93)(8000, 1.905)(12000, 1.895)(16000, 1.9)(20000, 1.88)(24000, 1.88)(28000, 1.9)
-	};
-	\addlegendentry{d=3, w=100};
-\addplot[color=blue,mark=diamond]
-coordinates {
-	(4000, 1.86)(8000, 1.839)(12000, 1.82)(16000, 1.8)(20000, 1.8)(24000, 1.81)(28000, 1.8)
-};
-	\addlegendentry{d=3, w=200};
-\addplot[color=green,mark=*]
-coordinates {
-	(4000, 1.87)(8000, 1.86)(12000, 1.85)(16000, 1.83)(20000, 1.83)(24000, 1.82)(28000, 1.82)
-};
-	\addlegendentry{d=5, w=50};
-\addplot[color=brown,mark=*]
-coordinates {
-	(4000, 2.05)(8000, 2.14)(12000, 2.2)(16000, 2.24)(20000, 2.29)(24000, 2.3)(28000, 2.304)
-};
-	\addlegendentry{d=5, w=100};
-\addplot[dashed, color=red,mark=*]
-coordinates {
-	(4000, 1.89)(8000, 1.86)(12000, 1.84)(16000, 1.83)(20000, 1.825)(24000, 1.81)(28000, 1.83)
-};
-	\addlegendentry{d=5, w=200};
-	\end{axis}
-	\end{tikzpicture}
-	
-	\caption{Showing the evolution of the error function values across the training steps, for some of the initial learning rates.}
-	\label{res-hidden}
-\end{figure}
-
 \section{Conclusion}
 
-longer trials
+In conclusion, the results of this investigation were not revolutionary. Although the reason behind the simple feed-forward model was to more easily observe changes in performance, it may have been too simplistic. However, experimenting with the ELU activation function was interesting, and it will be interesting to see if will be adopted by the community. 
+
+Despite the lack of new revelations, having set up a system that allows for a versatile and dynamic way to set up and train models, may help further experimentation in the future. 
 
 \section{Future Work}
 
-Convolutional neural network, drop out, max pool
-Continue to investigate ELU, in more complex models.
+Following on the progress and findings of this investigation, the next step involves building on the current setup so it can handle more complex scenarios. Initially a procedure for setting up and running convolutional neural networks will be implemented. Secondly, other complimentary features like drop out and max pooling are still needed, and will be even more relevant with convolutional neural networks. 
+
+Lastly, some investigation will go into the use of ELU as a part of a convolutional neural network. 
 
 \clearpage
 \medskip
