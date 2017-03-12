@@ -8,6 +8,6 @@ setup(
     description = ("Neural network framework for University of Edinburgh "
                    "School of Informatics Machine Learning Practical course."),
     url = "https://github.com/CSTR-Edinburgh/mlpractical",
-    packages=['mlp']
+    packages=['mlp'], install_requires=['tensorflow']
 )
 
