@@ -8,4 +8,5 @@ inputs, targets = input.inputs()
 
 if __name__ == '__main__':
     # tf.app.run()
+    input.placeholder()
     print('run')
