@@ -1,7 +1,7 @@
 import tensorflow as tf
 from mlp.data_providers import CIFAR10DataProvider
 
-IMAGE_SIZE = 24
+IMAGE_SIZE = 32
 
 # Global constants describing the CIFAR-10 data set.
 NUM_CLASSES = 10
@@ -12,6 +12,9 @@ NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 10000
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer('batch_size', 50,
                             """Number of images to process in a batch.""")
+
+train_data = CIFAR10DataProvider('train', batch_size=FLAGS.batch_size)
+valid_data = CIFAR10DataProvider('valid', batch_size=FLAGS.batch_size)
 
 
 def inputs():
