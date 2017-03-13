@@ -13,9 +13,6 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer('batch_size', 50,
                             """Number of images to process in a batch.""")
 
-train_data = CIFAR10DataProvider('train', batch_size=FLAGS.batch_size)
-valid_data = CIFAR10DataProvider('valid', batch_size=FLAGS.batch_size)
-
 
 def inputs():
     """

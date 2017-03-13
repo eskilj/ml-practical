@@ -1,4 +1,5 @@
 import tensorflow as tf
+import numpy as np
 from datetime import datetime
 import time
 
@@ -89,8 +90,7 @@ def _train():
         train_data, valid_data = input.inputs()
         inputs, targets = input.placeholder()
 
-        _inputs = tf.reshape(inputs, [-1, input.IMAGE_SIZE, input.IMAGE_SIZE, input.NUM_CHANNELS])
-        conv1 = layer.conv2d(_inputs, weights=[5, 5, 3, 64], name='conv1')
+        conv1 = layer.conv2d(inputs, weights=[5, 5, 3, 64], name='conv1')
         pool1 = layer.max_pool(conv1, name='pool1')
         flat, next_input = layer.flatten(pool1)
         fc = layer.fully_connected_layer(flat, next_input, next_input/2)
@@ -116,12 +116,13 @@ def _train():
 
     sess = tf.InteractiveSession(graph=graph)
     num_epoch = 10
-    valid_inputs = valid_data.inputs
+    valid_inputs = np.reshape(valid_data.inputs, [10000, 32, 32, 3])
     valid_targets = valid_data.to_one_of_k(valid_data.targets)
     sess.run(init)
     for e in range(num_epoch):
         print('Epoch {}'.format(e))
         for b, (input_batch, target_batch) in enumerate(train_data):
+            input_batch = np.reshape(input_batch, [50, 32, 32, 3])
             _, summary = sess.run(
                 [train_step, summary_op],
                 feed_dict={inputs: input_batch, targets: target_batch})
