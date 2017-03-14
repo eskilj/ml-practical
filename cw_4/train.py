@@ -1,23 +1,17 @@
 import tensorflow as tf
-import numpy as np
-from datetime import datetime
-import time
 import os
 import layer
-import model
 import input
 
 FLAGS = tf.app.flags.FLAGS
 
-tf.app.flags.DEFINE_string('train_dir', 'tf-log',
+tf.app.flags.DEFINE_string('train_dir', 'tf-log/conv',
                            """Directory where to write event logs """
                            """and checkpoint.""")
-tf.app.flags.DEFINE_string('graph_name', 'graph',
+tf.app.flags.DEFINE_string('graph_name', 'conv4',
                            """Name of graph, for TB """)
-tf.app.flags.DEFINE_integer('max_steps', 10000,
-                            """Number of batches to run.""")
-tf.app.flags.DEFINE_boolean('log_device_placement', False,
-                            """Whether to log device placement.""")
+tf.app.flags.DEFINE_integer('train_epochs', 10,
+                            """Number of epochs to train for.""")
 
 
 def _train(name):
@@ -28,8 +22,16 @@ def _train(name):
 
         tf.summary.image('img', inputs)
 
+        # Model for training
         conv1 = layer.conv2d(inputs, weights=[5, 5, 3, 4], name='conv1')
         pool1 = layer.max_pool(conv1, name='pool1')
+
+        # conv2 = layer.conv2d(pool1, weights=[5, 5, 4, 4], name='conv2')
+        # pool2 = layer.max_pool(conv2, name='pool2')
+        #
+        # conv3 = layer.conv2d(pool2, weights=[5, 5, 4, 4], name='conv3')
+        # pool3 = layer.max_pool(conv3, name='pool3')
+
         flat, next_input = layer.flatten(pool1)
         fc = layer.fully_connected_layer(flat, next_input, next_input/2)
         outputs = layer.fully_connected_layer(fc, next_input/2, 10, True,
@@ -53,26 +55,30 @@ def _train(name):
         init = tf.global_variables_initializer()
 
     sess = tf.InteractiveSession(graph=graph)
-    num_epoch = 20
-    valid_inputs = np.reshape(valid_data.inputs, [10000, 32, 32, 3])
+
+    _valid_inputs = valid_data.inputs.reshape((10000, -1, 3), order='F')
+    _valid_inputs = _valid_inputs.reshape((10000, 32, 32, 3))
     valid_targets = valid_data.to_one_of_k(valid_data.targets)
+
     sess.run(init)
-    for e in range(num_epoch):
-        print('Epoch {}'.format(e))
-        for b, (input_batch, target_batch) in enumerate(train_data):
-            input_batch = np.reshape(input_batch, [50, 32, 32, 3])
+    for epoch in range(FLAGS.train_epochs):
+        print('Epoch {}'.format(epoch))
+        for batch, (input_batch, target_batch) in enumerate(train_data):
+
+            input_batch = input_batch.reshape((50, -1, 3), order='F')
+            input_batch = input_batch.reshape(50, 32, 32, 3)
+
             _, summary = sess.run(
                 [train_step, summary_op],
                 feed_dict={inputs: input_batch, targets: target_batch})
             train_writer.add_summary(summary,
-                                     e * train_data.num_batches + b)
-            if b % 100 == 0:
-                print('Batch {}'.format(b))
-            #     valid_summary = sess.run(
-            #         summary_op,
-            #         feed_dict={inputs: valid_inputs, targets: valid_targets})
-            #     valid_writer.add_summary(valid_summary,
-            #                              e * train_data.num_batches + b)
+                                     epoch * train_data.num_batches + batch)
+            if (batch % 100 == 0) or (batch == 39999):
+                valid_summary = sess.run(
+                    summary_op,
+                    feed_dict={inputs: _valid_inputs, targets: valid_targets})
+                valid_writer.add_summary(valid_summary,
+                                         epoch * train_data.num_batches + batch)
 
 
 def main(argv=None):
