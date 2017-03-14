@@ -19,8 +19,8 @@ def flatten(inputs):
 
 def conv2d(inputs, weights, name='conv2d'):
     with tf.name_scope(name):
-        kernel = variable(weights or [5, 5, 3, 64])
-        biases = _biases([64])
+        kernel = variable(weights or [5, 5, 3, 4])
+        biases = _biases([4])
         _conv = tf.nn.conv2d(inputs, kernel, [1, 1, 1, 1], padding=DEFAULT_PADDING)
         _pre = tf.nn.bias_add(_conv, biases)
         return tf.nn.relu(_pre)
