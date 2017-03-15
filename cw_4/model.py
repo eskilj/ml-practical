@@ -5,7 +5,8 @@ import tensorflow as tf
 
 class Model:
 
-    def __init__(self, layers):
+    def __init__(self, name, layers):
+        self.name = name
         self.layers = layers
 
     def get_layers(self, inputs):

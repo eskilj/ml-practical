@@ -1,7 +1,7 @@
 import tensorflow as tf
 import os
 import layer
-from layer import Conv2dLayer
+from layer import Conv2dLayer, PoolLayer, AffineLayer
 from model import Model
 import input
 
@@ -24,7 +24,7 @@ def train_graph(name, model):
 
         tf.summary.image('img', inputs)
         if model:
-            outputs = model.get_layers(inputs)
+            outputs = model.get_layers(inputs).outputs
         else:
             print('no model')
             # Model for training
@@ -88,13 +88,16 @@ def train_graph(name, model):
 
 def main(argv=None):
     layers = [
-        Conv2dLayer(None, [5, 5, 3, 4], [4], 'conv_1')
+        Conv2dLayer(None, [5, 5, 3, 4], [4], 'conv_1'),
+        PoolLayer(None, 'pool_1'),
+        AffineLayer('fc_1', True),
+        AffineLayer('fc_2', final_layer=True)
     ]
     _mo = Model(layers=layers)
-    # if tf.gfile.Exists(os.path.join(FLAGS.train_dir, FLAGS.graph_name)):
-    #     print('Deleting previous summary directory.')
-    #     tf.gfile.DeleteRecursively(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
-    # tf.gfile.MakeDirs(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
+    if tf.gfile.Exists(os.path.join(FLAGS.train_dir, FLAGS.graph_name)):
+        print('Deleting previous summary directory.')
+        tf.gfile.DeleteRecursively(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
+    tf.gfile.MakeDirs(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
     train_graph(FLAGS.graph_name, _mo)
 
 
