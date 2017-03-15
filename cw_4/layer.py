@@ -3,33 +3,28 @@ import os
 DEFAULT_PADDING = 'SAME'
 
 
-def flatten(inputs):
-    layer_shape = inputs.get_shape()
-    num_features = layer_shape[1:4].num_elements()
-    return tf.reshape(inputs, [-1, num_features]), num_features
-
-
 class Layer(object):
     def __init__(self, name):
         self.name = name
         self.inputs = None
         self.outputs = None
+        self.activation = tf.nn.relu
 
     def flatten(self):
         layer_shape = self.inputs.get_shape()
         num_features = layer_shape[1:4].num_elements()
         self.inputs = tf.reshape(self.inputs, [-1, num_features])
 
+    def set_activation(self, activation):
+        self.activation = activation
+
 
 class Conv2dLayer(Layer):
-    def __init__(self, inputs, weights, biases, name):
+    def __init__(self, weights, biases, name, apply_batch_norm=False):
         super(Conv2dLayer, self).__init__(name)
         self.weights = weights
         self.biases = biases
-        self.inputs = inputs
-        self.outputs = None
-        if inputs:
-            self.set_inputs(inputs)
+        self.apply_batch_norm = apply_batch_norm
 
     def set_inputs(self, inputs):
         self.inputs = inputs
@@ -39,7 +34,9 @@ class Conv2dLayer(Layer):
         with tf.name_scope(self.name):
             _conv = tf.nn.conv2d(self.inputs, variable(self.weights), [1, 1, 1, 1], padding=DEFAULT_PADDING)
             _pre = tf.nn.bias_add(_conv, _biases(self.biases))
-            self.outputs = tf.nn.relu(_pre)
+            if self.apply_batch_norm:
+                _pre = _bn(_pre, _pre.get_shape()[-1].value)
+            self.outputs = self.activation(_pre)
 
 
 class AffineLayer(Layer):
@@ -68,14 +65,13 @@ class AffineLayer(Layer):
             if self.final_layer:
                 self.outputs = tf.add(tf.matmul(self.inputs, weights), biases)
             else:
-                self.outputs = tf.nn.relu(tf.matmul(self.inputs, weights) + biases)
+                self.outputs = self.activation(tf.matmul(self.inputs, weights) + biases)
 
 
 class PoolLayer(Layer):
-    def __init__(self, inputs, name):
+    """Layer of non-overlapping 1D pools of inputs."""
+    def __init__(self, name):
         super(PoolLayer, self).__init__(name)
-        self.inputs = inputs
-        self.outputs = None
 
     def set_inputs(self, inputs):
         self.inputs = inputs
@@ -91,10 +87,15 @@ class PoolLayer(Layer):
                 name=self.name)
 
 
-def max_pool(inputs, name='pool'):
-    """Layer outputting the maximum of non-overlapping 1D pools of inputs."""
-    return tf.nn.max_pool(inputs, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1],
-                          padding=DEFAULT_PADDING, name=name)
+def _bn(inputs, output_dim):
+    """Batch normalization on convolutional layers."""
+    beta = tf.Variable(tf.constant(0.0, shape=[output_dim]), name='beta')
+    gamma = tf.Variable(tf.constant(1.0, shape=[output_dim]), name='gamma')
+    batch_mean, batch_var = tf.nn.moments(inputs, [0], name='moments')
+    epsilon = 1e-3
+    return tf.nn.batch_normalization(
+        inputs, batch_mean, batch_var, beta, gamma, epsilon, 'bn'
+    )
 
 
 def variable(shape, stddev=0.1, name='weights'):
@@ -103,43 +104,6 @@ def variable(shape, stddev=0.1, name='weights'):
 
 def _biases(shape, name='biases'):
     return tf.Variable(tf.constant(0.0, shape=shape, name=name))
-
-
-def _flatten(inputs):
-    layer_shape = inputs.get_shape()
-    num_features = layer_shape[1:4].num_elements()
-    return tf.reshape(inputs, [-1, num_features]), num_features
-
-
-def conv2d(inputs, weights, name='conv2d'):
-    with tf.name_scope(name):
-        kernel = variable(weights or [5, 5, 3, 4])
-        biases = _biases([4])
-        _conv = tf.nn.conv2d(inputs, kernel, [1, 1, 1, 1], padding=DEFAULT_PADDING)
-        _pre = tf.nn.bias_add(_conv, biases)
-        return tf.nn.relu(_pre)
-
-
-def fully_connected_layer(inputs, input_dim, output_dim, final=False,
-                          name='fc-layer'):
-    with tf.name_scope(name):
-        weights = tf.Variable(
-            tf.truncated_normal(
-                [input_dim, output_dim],
-                stddev=2. / ( input_dim + output_dim) ** 0.5),
-            name='weights'
-        )
-        biases = tf.Variable(tf.zeros([output_dim]), name='biases')
-        if final:
-            outputs = tf.add(tf.matmul(inputs, weights), biases)
-        else:
-            outputs = tf.nn.relu(tf.matmul(inputs, weights) + biases)
-        return outputs
-
-
-def relu(inputs, name='relu'):
-    """Layer implementing an element-wise rectified linear transformation."""
-    return tf.nn.relu(inputs, name=name)
 
 
 def graph_summary(error, accuracy, name, graph):

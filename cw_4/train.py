@@ -1,46 +1,25 @@
 import tensorflow as tf
 import os
 import layer
-from layer import Conv2dLayer, PoolLayer, AffineLayer
 from model import Model
 import input
 
 FLAGS = tf.app.flags.FLAGS
 
-tf.app.flags.DEFINE_string('train_dir', 'tf-log/conv',
+tf.app.flags.DEFINE_string('train_dir', 'tf-log',
                            """Directory where to write event logs """
                            """and checkpoint.""")
-tf.app.flags.DEFINE_string('graph_name', 'conv4',
-                           """Name of graph, for TB """)
-tf.app.flags.DEFINE_integer('train_epochs', 10,
-                            """Number of epochs to train for.""")
 
 
-def train_graph(name, model):
+def train_graph(model):
     graph = tf.Graph()
     with graph.as_default():
+
         train_data, valid_data = input.inputs()
         inputs, targets = input.placeholder()
 
         tf.summary.image('img', inputs)
-        if model:
-            outputs = model.get_layers(inputs).outputs
-        else:
-            print('no model')
-            # Model for training
-            conv1 = layer.conv2d(inputs, weights=[5, 5, 3, 4], name='conv1')
-            pool1 = layer.max_pool(conv1, name='pool1')
-
-            # conv2 = layer.conv2d(pool1, weights=[5, 5, 4, 4], name='conv2')
-            # pool2 = layer.max_pool(conv2, name='pool2')
-            #
-            # conv3 = layer.conv2d(pool2, weights=[5, 5, 4, 4], name='conv3')
-            # pool3 = layer.max_pool(conv3, name='pool3')
-
-            flat, next_input = layer.flatten(pool1)
-            fc = layer.fully_connected_layer(flat, next_input, next_input/2)
-            outputs = layer.fully_connected_layer(fc, next_input/2, 10, True,
-                                                  'output')
+        outputs = model.get_layers(inputs)
 
         with tf.name_scope('error'):
             error = tf.reduce_mean(
@@ -52,11 +31,9 @@ def train_graph(name, model):
                         tf.float32))
 
         with tf.name_scope('train'):
-            train_step = tf.train.AdamOptimizer().minimize(error)
+            train_step = tf.train.AdamOptimizer(model.initial_lr).minimize(error)
 
-        summary_op, train_writer, valid_writer = layer.graph_summary(error, accuracy,
-                                                               name, graph)
-
+        summary_op, train_writer, valid_writer = layer.graph_summary(error, accuracy, model.name, graph)
         init = tf.global_variables_initializer()
 
     sess = tf.InteractiveSession(graph=graph)
@@ -66,8 +43,8 @@ def train_graph(name, model):
     valid_targets = valid_data.to_one_of_k(valid_data.targets)
 
     sess.run(init)
-    for epoch in range(FLAGS.train_epochs):
-        print('Epoch {}'.format(epoch))
+    for epoch in range(model.train_epochs):
+        print('Epoch {} / {}'.format(epoch+1, model.train_epochs))
         for batch, (input_batch, target_batch) in enumerate(train_data):
 
             input_batch = input_batch.reshape((50, -1, 3), order='F')
@@ -87,18 +64,12 @@ def train_graph(name, model):
 
 
 def main(argv=None):
-    layers = [
-        Conv2dLayer(None, [5, 5, 3, 4], [4], 'conv_1'),
-        PoolLayer(None, 'pool_1'),
-        AffineLayer('fc_1', True),
-        AffineLayer('fc_2', final_layer=True)
-    ]
-    _mo = Model(layers=layers)
-    if tf.gfile.Exists(os.path.join(FLAGS.train_dir, FLAGS.graph_name)):
+    model = Model.trial()
+    if tf.gfile.Exists(os.path.join(FLAGS.train_dir, model.name)):
         print('Deleting previous summary directory.')
-        tf.gfile.DeleteRecursively(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
-    tf.gfile.MakeDirs(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
-    train_graph(FLAGS.graph_name, _mo)
+        tf.gfile.DeleteRecursively(os.path.join(FLAGS.train_dir, model.name))
+    tf.gfile.MakeDirs(os.path.join(FLAGS.train_dir, model.name))
+    train_graph(model)
 
 
 if __name__ == '__main__':
