@@ -1,6 +1,8 @@
 import tensorflow as tf
 import os
 import layer
+from layer import Conv2dLayer
+from model import Model
 import input
 
 FLAGS = tf.app.flags.FLAGS
@@ -14,28 +16,31 @@ tf.app.flags.DEFINE_integer('train_epochs', 10,
                             """Number of epochs to train for.""")
 
 
-def _train(name):
+def train_graph(name, model):
     graph = tf.Graph()
     with graph.as_default():
         train_data, valid_data = input.inputs()
         inputs, targets = input.placeholder()
 
         tf.summary.image('img', inputs)
+        if model:
+            outputs = model.get_layers(inputs)
+        else:
+            print('no model')
+            # Model for training
+            conv1 = layer.conv2d(inputs, weights=[5, 5, 3, 4], name='conv1')
+            pool1 = layer.max_pool(conv1, name='pool1')
 
-        # Model for training
-        conv1 = layer.conv2d(inputs, weights=[5, 5, 3, 4], name='conv1')
-        pool1 = layer.max_pool(conv1, name='pool1')
+            # conv2 = layer.conv2d(pool1, weights=[5, 5, 4, 4], name='conv2')
+            # pool2 = layer.max_pool(conv2, name='pool2')
+            #
+            # conv3 = layer.conv2d(pool2, weights=[5, 5, 4, 4], name='conv3')
+            # pool3 = layer.max_pool(conv3, name='pool3')
 
-        # conv2 = layer.conv2d(pool1, weights=[5, 5, 4, 4], name='conv2')
-        # pool2 = layer.max_pool(conv2, name='pool2')
-        #
-        # conv3 = layer.conv2d(pool2, weights=[5, 5, 4, 4], name='conv3')
-        # pool3 = layer.max_pool(conv3, name='pool3')
-
-        flat, next_input = layer.flatten(pool1)
-        fc = layer.fully_connected_layer(flat, next_input, next_input/2)
-        outputs = layer.fully_connected_layer(fc, next_input/2, 10, True,
-                                              'output')
+            flat, next_input = layer.flatten(pool1)
+            fc = layer.fully_connected_layer(flat, next_input, next_input/2)
+            outputs = layer.fully_connected_layer(fc, next_input/2, 10, True,
+                                                  'output')
 
         with tf.name_scope('error'):
             error = tf.reduce_mean(
@@ -82,11 +87,15 @@ def _train(name):
 
 
 def main(argv=None):
-    if tf.gfile.Exists(os.path.join(FLAGS.train_dir, FLAGS.graph_name)):
-        print('Deleting previous summary directory.')
-        tf.gfile.DeleteRecursively(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
-    tf.gfile.MakeDirs(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
-    _train(FLAGS.graph_name)
+    layers = [
+        Conv2dLayer(None, [5, 5, 3, 4], [4], 'conv_1')
+    ]
+    _mo = Model(layers=layers)
+    # if tf.gfile.Exists(os.path.join(FLAGS.train_dir, FLAGS.graph_name)):
+    #     print('Deleting previous summary directory.')
+    #     tf.gfile.DeleteRecursively(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
+    # tf.gfile.MakeDirs(os.path.join(FLAGS.train_dir, FLAGS.graph_name))
+    train_graph(FLAGS.graph_name, _mo)
 
 
 if __name__ == '__main__':

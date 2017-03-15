@@ -3,6 +3,32 @@ import os
 DEFAULT_PADDING = 'SAME'
 
 
+class Layer(object):
+    def __init__(self, name):
+        self.name = name
+
+
+class Conv2dLayer(Layer):
+    def __init__(self, inputs, weights, biases, name):
+        super(Conv2dLayer, self).__init__(name)
+        self.weights = weights
+        self.biases = biases
+        self.inputs = inputs
+        self.outputs = None
+        if inputs:
+            self.set_inputs(inputs)
+
+    def set_inputs(self, inputs):
+        self.inputs = inputs
+        self.set_outputs()
+
+    def set_outputs(self):
+        with tf.name_scope(self.name):
+            _conv = tf.nn.conv2d(self.inputs, variable(self.weights), [1, 1, 1, 1], padding=DEFAULT_PADDING)
+            _pre = tf.nn.bias_add(_conv, _biases(self.biases))
+            self.outputs = tf.nn.relu(_pre)
+
+
 def variable(shape, name='weights'):
     return tf.Variable(tf.truncated_normal(shape=shape, stddev=0.1, name=name))
 
