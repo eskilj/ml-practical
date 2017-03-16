@@ -6,6 +6,8 @@ from model import Model
 import input
 import numpy as np
 
+NUM_THREADS = 8
+
 # check necessary environment variables are defined
 assert 'MLP_DATA_DIR' in os.environ, (
     'An environment variable MLP_DATA_DIR must be set to the path containing'
@@ -69,7 +71,7 @@ def train_graph(model):
 
         summary_op, train_writer, valid_writer, saver, checkpoint_dir, exp_dir = layer.graph_summary(error, accuracy, model.name, graph)
 
-    sess = tf.Session(graph=graph)
+    sess = tf.Session(graph=graph, config=tf.ConfigProto(intra_op_parallelism_threads=NUM_THREADS))
 
     sess.run(tf.global_variables_initializer())
     last_batch = (model.train_epochs * 800) - 1

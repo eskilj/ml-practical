@@ -61,3 +61,4 @@ docs/_build/
 target/
 /cw_4/tf-log/
 /.idea/
+/notebooks/tf-log/

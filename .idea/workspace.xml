@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed84c279-e65c-4ddb-b7b0-66733b2dbda6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cw_4/job.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cw_4/job.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.002/train/events.out.tfevents.1489621405.EJMP.home" afterPath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.002/train/events.out.tfevents.1489621405.EJMP.home" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.002/valid/events.out.tfevents.1489621406.EJMP.home" afterPath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.002/valid/events.out.tfevents.1489621406.EJMP.home" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/cifar-100-train.npz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/cifar-100-valid.npz" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/train/events.out.tfevents.1489622986.EJMP.home" afterPath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/train/events.out.tfevents.1489622986.EJMP.home" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/valid/events.out.tfevents.1489622988.EJMP.home" afterPath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/valid/events.out.tfevents.1489622988.EJMP.home" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cw_4/train.py" afterPath="$PROJECT_DIR$/cw_4/train.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/Coursework_4-checkpoint.ipynb" afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/Coursework_4-checkpoint.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/Coursework_4.ipynb" afterPath="$PROJECT_DIR$/notebooks/Coursework_4.ipynb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -53,11 +56,21 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cw_4/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="742">
-              <caret line="134" column="22" lean-forward="true" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
+            <state relative-caret-position="434">
+              <caret line="81" column="46" lean-forward="true" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="384">
+              <caret line="59" column="11" lean-forward="true" selection-start-line="59" selection-start-column="11" selection-end-line="59" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -72,7 +85,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="job.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="job.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cw_4/job.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="462">
@@ -152,16 +165,16 @@
         <option value="$PROJECT_DIR$/cifar10/cifar10.py" />
         <option value="$PROJECT_DIR$/notebooks/Coursework_3-4.ipynb" />
         <option value="$PROJECT_DIR$/cifar10/cifar10_train.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/cifar10/cifar10_multi_gpu_train.py" />
         <option value="$PROJECT_DIR$/cw_4/input.py" />
         <option value="$PROJECT_DIR$/cw_4/__init__.py" />
         <option value="$PROJECT_DIR$/notebooks/Coursework_4.ipynb" />
         <option value="$PROJECT_DIR$/cw_4/layer.py" />
         <option value="$PROJECT_DIR$/cw_4/model.py" />
-        <option value="$PROJECT_DIR$/cw_4/train.py" />
         <option value="$PROJECT_DIR$/cw_4/job.sh" />
         <option value="$PROJECT_DIR$/cw_4/job.py" />
+        <option value="$PROJECT_DIR$/cw_4/train.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -230,7 +243,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cw_4" />
+              <option name="myItemId" value="notebooks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -560,7 +573,7 @@
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12846482" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2563966" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.32970297" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970297" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -797,14 +810,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="51" column="5" lean-forward="true" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cifar10/cifar10_eval.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-997">
@@ -978,30 +983,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cw_4/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-          <folding>
-            <element signature="e#102#125#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cw_4/layer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="676">
           <caret line="149" column="0" lean-forward="false" selection-start-line="149" selection-start-column="0" selection-end-line="156" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cw_4/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="742">
-          <caret line="134" column="22" lean-forward="true" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -1023,6 +1008,34 @@
           <folding>
             <element signature="e#0#58#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cw_4/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+          <folding>
+            <element signature="e#102#125#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cw_4/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="81" column="46" lean-forward="true" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="59" column="11" lean-forward="true" selection-start-line="59" selection-start-column="11" selection-end-line="59" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
