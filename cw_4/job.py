@@ -1,13 +1,13 @@
-from cw_4.layer import Conv2dLayer, PoolLayer, AffineLayer
-from cw_4.model import Model
-import cw_4.train as train_model
+from layer import Conv2dLayer, PoolLayer, AffineLayer
+from model import Model
+import train as train_model
 import tensorflow as tf
 
 wd = 0.005
 
 # ROUND 2
 lrs = [0.002, 0.004]
-epochs = 10
+epochs = 2
 
 for lr in lrs:
     layers = [
@@ -21,7 +21,7 @@ for lr in lrs:
     ]
 
     _mo = Model(
-        'lr/conv2,fc2,bn,fs=3,nf=24,wd={},lr={}'.format(wd, lr),
+        'x/lr/conv2,fc2,bn,fs=3,nf=24,wd={},lr={}'.format(wd, lr),
         layers=layers,
         activation=tf.nn.elu,
         train_epochs=epochs,
