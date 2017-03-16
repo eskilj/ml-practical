@@ -97,7 +97,7 @@ def train_graph(model):
         train_error[e] /= train_data.num_batches
         train_accuracy[e] /= train_data.num_batches
 
-        if (step % 100 == 0) or (step == last_batch):
+        if (step == 1) or (step % 100 == 0) or (step == last_batch):
             # evaluate validation set performance
             valid_summary, valid_error[e], valid_accuracy[e] = sess.run(
                 [summary_op, error, accuracy],
