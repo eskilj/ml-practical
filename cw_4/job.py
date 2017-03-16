@@ -329,37 +329,41 @@ def train_graph(model):
 
 def main(argv=None):
 
-    lrs = [0.001, 0.003, 0.006]
-    acs = [tf.nn.elu, tf.nn.relu]
+    lrs = [0.005]
+    acs = [tf.nn.relu]
+    f_sizes = [3, 5, 7]
+    num_f = [4, 24, 32]
     epochs = 10
 
     for lr in lrs:
         for ac in acs:
-            layers = [
-                Conv2dLayer([3, 3, 3, 24], [24], 'conv_1'),
-                PoolLayer('pool_1'),
-                Conv2dLayer([3, 3, 24, 24], [24], 'conv_2'),
-                PoolLayer('pool_2'),
-                AffineLayer(name='fc_1', flatten_inputs=True),
-                AffineLayer(name='fc_2'),
-                AffineLayer(name='output', final_layer=True)
-            ]
+            for fs in f_sizes:
+                for nf in num_f:
+                    layers = [
+                        Conv2dLayer([fs, fs, 3, nf], [nf], 'conv_1'),
+                        PoolLayer('pool_1'),
+                        Conv2dLayer([fs, fs, nf, nf], [nf], 'conv_2'),
+                        PoolLayer('pool_2'),
+                        AffineLayer(name='fc_1', flatten_inputs=True),
+                        AffineLayer(name='fc_2'),
+                        AffineLayer(name='output', final_layer=True)
+                    ]
 
-            _mo = Model(
-                'cw4/conv2,fc2,{},fs=3,nf=24,lr={}'.format(ac.func_name, lr),
-                layers=layers,
-                activation=ac,
-                train_epochs=epochs,
-                initial_lr=lr
-            )
+                    _mo = Model(
+                        'cw4/{},fs={},nf={},lr={}'.format(ac.func_name, fs, nf, lr),
+                        layers=layers,
+                        activation=ac,
+                        train_epochs=epochs,
+                        initial_lr=lr
+                    )
 
-            if tf.gfile.Exists(os.path.join(FLAGS.train_dir, _mo.name)):
-                print('Deleting previous summary directory.')
-                tf.gfile.DeleteRecursively(
-                    os.path.join(FLAGS.train_dir, _mo.name))
-            tf.gfile.MakeDirs(os.path.join(FLAGS.train_dir, _mo.name))
+                    if tf.gfile.Exists(os.path.join(FLAGS.train_dir, _mo.name)):
+                        print('Deleting previous summary directory.')
+                        tf.gfile.DeleteRecursively(
+                            os.path.join(FLAGS.train_dir, _mo.name))
+                    tf.gfile.MakeDirs(os.path.join(FLAGS.train_dir, _mo.name))
 
-            train_graph(_mo)
+                    train_graph(_mo)
 
 
 if __name__ == '__main__':
