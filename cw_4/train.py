@@ -43,6 +43,8 @@ def train_graph(model):
     valid_targets = valid_data.to_one_of_k(valid_data.targets)
 
     sess.run(init)
+    last_batch = (model.train_epochs * 800) - 1
+
     for epoch in range(model.train_epochs):
         print('Epoch {} / {}'.format(epoch+1, model.train_epochs))
         for batch, (input_batch, target_batch) in enumerate(train_data):
@@ -55,7 +57,7 @@ def train_graph(model):
                 feed_dict={inputs: input_batch, targets: target_batch})
             train_writer.add_summary(summary,
                                      epoch * train_data.num_batches + batch)
-            if (batch % 100 == 0) or (batch == 39999):
+            if (batch % 400 == 0) or (batch == last_batch):
                 valid_summary = sess.run(
                     summary_op,
                     feed_dict={inputs: _valid_inputs, targets: valid_targets})

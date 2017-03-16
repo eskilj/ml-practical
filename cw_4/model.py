@@ -6,11 +6,11 @@ from layer import Conv2dLayer, PoolLayer, AffineLayer
 
 class Model:
 
-    def __init__(self, name, layers, activation=tf.nn.relu, train_epochs=10):
+    def __init__(self, name, layers, activation=tf.nn.relu, train_epochs=10, initial_lr=0.001):
         self.name = name or 'unnamed model'
         self.layers = layers
         self.train_epochs = train_epochs
-        self.initial_lr = 0.001
+        self.initial_lr = initial_lr
         self.activation = activation
 
     def get_layers(self, inputs):
