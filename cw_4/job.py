@@ -1,14 +1,11 @@
 import tensorflow as tf
 import os
 import numpy as np
-from mlp.data_providers import CIFAR10DataProvider
-DEFAULT_PADDING = 'SAME'
-NUM_THREADS = 8
+import mlp.data_providers as data_providers
 
-# check necessary environment variables are defined
-assert 'MLP_DATA_DIR' in os.environ, (
-    'An environment variable MLP_DATA_DIR must be set to the path containing'
-    ' MLP data before running script.')
+def_padding = 'SAME'
+num_thr = 8
+
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -20,9 +17,9 @@ tf.app.flags.DEFINE_integer('batch_size', 50,
                             """Number of images to process in a batch.""")
 
 # DATA CONSTANTS
-IMAGE_SIZE = 32
-NUM_CLASSES = 10
-NUM_CHANNELS = 3
+img_size = 32
+num_cls = 10
+num_ch = 3
 
 
 def _inputs():
@@ -34,16 +31,16 @@ def _inputs():
       valid_data: Validation Data
     """
 
-    train_data = CIFAR10DataProvider('train', batch_size=FLAGS.batch_size)
-    valid_data = CIFAR10DataProvider('valid', batch_size=FLAGS.batch_size)
+    train_data = data_providers.CIFAR10DataProvider('train', batch_size=FLAGS.batch_size)
+    valid_data = data_providers.CIFAR10DataProvider('valid', batch_size=FLAGS.batch_size)
     return train_data, valid_data
 
 
 def placeholder():
     inp = tf.placeholder(
         tf.float32,
-        shape=[None, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS])
-    targ = tf.placeholder(tf.float32, shape=[None, NUM_CLASSES])
+        shape=[None, img_size, img_size, num_ch])
+    targ = tf.placeholder(tf.float32, shape=[None, num_cls])
     return inp, targ
 
 
@@ -102,7 +99,7 @@ class Conv2dLayer(Layer):
             self.biases = _biases(self.biases)
             self.weights = _weights(self.weights, decay=self.weight_decay)
 
-            _conv = tf.nn.conv2d(self.inputs, self.weights, [1, 1, 1, 1], padding=DEFAULT_PADDING)
+            _conv = tf.nn.conv2d(self.inputs, self.weights, [1, 1, 1, 1], padding=def_padding)
             _pre = tf.nn.bias_add(_conv, self.biases)
             if self.apply_batch_norm:
                 _pre = _bn(_pre, _pre.get_shape()[-1].value)
@@ -163,7 +160,7 @@ class PoolLayer(Layer):
                 self.inputs,
                 ksize=[1, 2, 2, 1],
                 strides=[1, 2, 2, 1],
-                padding=DEFAULT_PADDING,
+                padding=def_padding,
                 name=self.name)
 
 
@@ -270,7 +267,7 @@ def train_graph(model):
         summary_op, train_writer, valid_writer, saver, checkpoint_dir, exp_dir = graph_summary(error, accuracy, model.name, graph)
         init = tf.global_variables_initializer()
 
-    sess = tf.Session(graph=graph, config=tf.ConfigProto(intra_op_parallelism_threads=NUM_THREADS))
+    sess = tf.Session(graph=graph, config=tf.ConfigProto(intra_op_parallelism_threads=num_thr))
 
     sess.run(init)
     last_batch = (model.train_epochs * 800) - 1
