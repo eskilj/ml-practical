@@ -1,5 +1,4 @@
 import tensorflow as tf
-import os
 DEFAULT_PADDING = 'SAME'
 
 
@@ -129,7 +128,7 @@ def _bn(inputs, output_dim):
     """Batch normalization on convolutional layers."""
     beta = tf.Variable(tf.constant(0.0, shape=[output_dim]), name='beta')
     gamma = tf.Variable(tf.constant(1.0, shape=[output_dim]), name='gamma')
-    batch_mean, batch_var = tf.nn.moments(inputs, [0], name='moments')
+    batch_mean, batch_var = tf.nn.moments(inputs, [0, 1, 2], name='moments')
     epsilon = 1e-3
     return tf.nn.batch_normalization(
         inputs, batch_mean, batch_var, beta, gamma, epsilon, 'bn'
@@ -145,13 +144,3 @@ def _weights(shape, stddev=0.1, decay=None, name='weights'):
 
 def _biases(shape, name='biases'):
     return tf.Variable(tf.constant(0.0, shape=shape, name=name))
-
-
-def graph_summary(error, accuracy, name, graph):
-    tf.summary.scalar('error', error)
-    tf.summary.scalar('accuracy', accuracy)
-    summary_op = tf.summary.merge_all()
-
-    train_writer = tf.summary.FileWriter(os.path.join('tf-log', name, 'train'), graph=graph)
-    valid_writer = tf.summary.FileWriter(os.path.join('tf-log', name, 'valid'), graph=graph)
-    return summary_op, train_writer, valid_writer

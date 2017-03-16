@@ -1,7 +1,5 @@
 import tensorflow as tf
 import os
-import datetime
-import layer
 from model import Model
 import input
 import numpy as np
@@ -12,9 +10,6 @@ NUM_THREADS = 8
 assert 'MLP_DATA_DIR' in os.environ, (
     'An environment variable MLP_DATA_DIR must be set to the path containing'
     ' MLP data before running script.')
-assert 'OUTPUT_DIR' in os.environ, (
-    'An environment variable OUTPUT_DIR must be set to the path to write'
-    ' output to before running script.')
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -29,16 +24,15 @@ def graph_summary(error, accuracy, name, graph):
     summary_op = tf.summary.merge_all()
 
     # create objects for writing summaries and checkpoints during training
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    exp_dir = os.path.join(os.environ['OUTPUT_DIR'], timestamp)
-    checkpoint_dir = os.path.join(exp_dir, 'checkpoints')
+    exp_dir = os.path.join('tf-log', name)
+    checkpoint_dir = exp_dir
     if not os.path.exists(exp_dir):
         os.makedirs(exp_dir)
     if not os.path.exists(checkpoint_dir):
         os.makedirs(checkpoint_dir)
 
-    train_writer = tf.summary.FileWriter(os.path.join('tf-log', name, 'train'), graph=graph)
-    valid_writer = tf.summary.FileWriter(os.path.join('tf-log', name, 'valid'), graph=graph)
+    train_writer = tf.summary.FileWriter(os.path.join(exp_dir, 'train'), graph=graph)
+    valid_writer = tf.summary.FileWriter(os.path.join(exp_dir, 'valid'), graph=graph)
     saver = tf.train.Saver()
     return summary_op, train_writer, valid_writer, saver, checkpoint_dir, exp_dir
 
@@ -69,11 +63,12 @@ def train_graph(model):
         with tf.name_scope('train'):
             train_step = tf.train.AdamOptimizer(model.initial_lr).minimize(error)
 
-        summary_op, train_writer, valid_writer, saver, checkpoint_dir, exp_dir = layer.graph_summary(error, accuracy, model.name, graph)
+        summary_op, train_writer, valid_writer, saver, checkpoint_dir, exp_dir = graph_summary(error, accuracy, model.name, graph)
+        init = tf.global_variables_initializer()
 
     sess = tf.Session(graph=graph, config=tf.ConfigProto(intra_op_parallelism_threads=NUM_THREADS))
 
-    sess.run(tf.global_variables_initializer())
+    sess.run(init)
     last_batch = (model.train_epochs * 800) - 1
 
     train_accuracy = np.zeros(model.train_epochs)
@@ -81,6 +76,7 @@ def train_graph(model):
     valid_accuracy = np.zeros(model.train_epochs)
     valid_error = np.zeros(model.train_epochs)
     step = 0
+
     for e in range(model.train_epochs):
         for b, (input_batch, target_batch) in enumerate(train_data):
 
@@ -91,6 +87,7 @@ def train_graph(model):
             _, summary, batch_error, batch_acc = sess.run(
                 [train_step, summary_op, error, accuracy],
                 feed_dict={inputs: input_batch, targets: target_batch})
+
             # add symmary and accumulate stats
             train_writer.add_summary(summary, step)
             train_error[e] += batch_error
@@ -100,7 +97,7 @@ def train_graph(model):
         train_error[e] /= train_data.num_batches
         train_accuracy[e] /= train_data.num_batches
 
-        if (b % 400 == 0) or (b == last_batch):
+        if (step % 100 == 0) or (step == last_batch):
             # evaluate validation set performance
             valid_summary, valid_error[e], valid_accuracy[e] = sess.run(
                 [summary_op, error, accuracy],
