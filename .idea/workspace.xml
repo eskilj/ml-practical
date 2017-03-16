@@ -2,15 +2,202 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed84c279-e65c-4ddb-b7b0-66733b2dbda6" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/cifar-100-train.npz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/cifar-100-valid.npz" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/train/events.out.tfevents.1489622986.EJMP.home" afterPath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/train/events.out.tfevents.1489622986.EJMP.home" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/valid/events.out.tfevents.1489622988.EJMP.home" afterPath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/valid/events.out.tfevents.1489622988.EJMP.home" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cw_4/train.py" afterPath="$PROJECT_DIR$/cw_4/train.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/Coursework_4-checkpoint.ipynb" afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/Coursework_4-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/Coursework_4.ipynb" afterPath="$PROJECT_DIR$/notebooks/Coursework_4.ipynb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/ac/elu/train/events.out.tfevents.1487611218.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/ac/elu/valid/events.out.tfevents.1487611219.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/ac/relu/train/events.out.tfevents.1487609515.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/ac/relu/valid/events.out.tfevents.1487609516.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/ac/sigmoid/train/events.out.tfevents.1487611978.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/ac/sigmoid/valid/events.out.tfevents.1487611978.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/ac/tanh/train/events.out.tfevents.1487610248.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/ac/tanh/valid/events.out.tfevents.1487610248.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activ/elu/train/events.out.tfevents.1487651269.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activ/elu/valid/events.out.tfevents.1487651269.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activ/relu/train/events.out.tfevents.1487650114.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activ/relu/valid/events.out.tfevents.1487650115.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activ/sigmoid/train/events.out.tfevents.1487652677.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activ/sigmoid/valid/events.out.tfevents.1487652678.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activ/tanh/train/events.out.tfevents.1487650693.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activ/tanh/valid/events.out.tfevents.1487650693.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activation/elu/train/events.out.tfevents.1487671513.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activation/elu/valid/events.out.tfevents.1487671514.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activation/relu/train/events.out.tfevents.1487670312.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activation/relu/valid/events.out.tfevents.1487670312.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activation/sigmoid/train/events.out.tfevents.1487672134.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activation/sigmoid/valid/events.out.tfevents.1487672134.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activation/tanh/train/events.out.tfevents.1487670914.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/activation/tanh/valid/events.out.tfevents.1487670914.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2,elu,bn/train/events.out.tfevents.1489601021.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2,elu,bn/valid/events.out.tfevents.1489601022.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2,elu/train/events.out.tfevents.1489594027.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2,elu/valid/events.out.tfevents.1489594028.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2,sigmoid/train/events.out.tfevents.1489595294.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2,sigmoid/valid/events.out.tfevents.1489595295.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2,tanh/train/events.out.tfevents.1489592815.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2,tanh/valid/events.out.tfevents.1489592815.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2/train/events.out.tfevents.1489590803.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv/conv2,fc2/valid/events.out.tfevents.1489590804.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv4/train/events.out.tfevents.1489531560.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/conv4/valid/events.out.tfevents.1489531560.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=12/train/events.out.tfevents.1489603145.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=12/valid/events.out.tfevents.1489603147.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=16/train/events.out.tfevents.1489610179.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=16/train/events.out.tfevents.1489610299.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=16/valid/events.out.tfevents.1489610180.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=16/valid/events.out.tfevents.1489610300.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=2/train/events.out.tfevents.1489602955.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=2/valid/events.out.tfevents.1489602957.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=24/train/events.out.tfevents.1489605147.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=24/valid/events.out.tfevents.1489605149.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=32/train/events.out.tfevents.1489610639.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=2,nf=32/valid/events.out.tfevents.1489610641.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=3,nf=16/train/events.out.tfevents.1489611485.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=3,nf=16/valid/events.out.tfevents.1489611486.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=3,nf=24/train/events.out.tfevents.1489615320.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=3,nf=24/valid/events.out.tfevents.1489615321.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=3,nf=32/train/events.out.tfevents.1489611906.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=3,nf=32/valid/events.out.tfevents.1489611908.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=8,nf=12/train/events.out.tfevents.1489607558.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=8,nf=12/valid/events.out.tfevents.1489607560.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=8,nf=2/train/events.out.tfevents.1489606813.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=8,nf=2/valid/events.out.tfevents.1489606814.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=8,nf=24/train/events.out.tfevents.1489606065.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/filters/conv2,fc2,bn,fs=8,nf=24/valid/events.out.tfevents.1489606067.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/l2/conv2,fc2,bn,fs=2,nf=24,wd=0.0001/train/events.out.tfevents.1489616859.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/l2/conv2,fc2,bn,fs=2,nf=24,wd=0.0001/valid/events.out.tfevents.1489616860.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/l2/conv2,fc2,bn,fs=2,nf=24,wd=0.005/train/events.out.tfevents.1489617468.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/l2/conv2,fc2,bn,fs=2,nf=24,wd=0.005/valid/events.out.tfevents.1489617470.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/l2/conv2,fc2,bn,fs=2,nf=24,wd=0.01/train/events.out.tfevents.1489618041.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/l2/conv2,fc2,bn,fs=2,nf=24,wd=0.01/valid/events.out.tfevents.1489618042.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=1,wid=100/train/events.out.tfevents.1487623289.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=1,wid=100/valid/events.out.tfevents.1487623289.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=1,wid=200/train/events.out.tfevents.1487623619.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=1,wid=200/valid/events.out.tfevents.1487623620.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=1,wid=400/train/events.out.tfevents.1487624159.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=1,wid=400/valid/events.out.tfevents.1487624160.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=1,wid=50/train/events.out.tfevents.1487623044.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=1,wid=50/valid/events.out.tfevents.1487623045.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=2,wid=100/train/events.out.tfevents.1487625462.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=2,wid=100/valid/events.out.tfevents.1487625462.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=2,wid=200/train/events.out.tfevents.1487625809.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=2,wid=200/valid/events.out.tfevents.1487625810.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=2,wid=400/train/events.out.tfevents.1487626377.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=2,wid=400/valid/events.out.tfevents.1487626378.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=2,wid=50/train/events.out.tfevents.1487625217.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=2,wid=50/valid/events.out.tfevents.1487625218.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=4,wid=100/train/events.out.tfevents.1487627812.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=4,wid=100/valid/events.out.tfevents.1487627812.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=4,wid=200/train/events.out.tfevents.1487628180.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=4,wid=200/valid/events.out.tfevents.1487628181.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=4,wid=400/train/events.out.tfevents.1487628818.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=4,wid=400/valid/events.out.tfevents.1487628819.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=4,wid=50/train/events.out.tfevents.1487627546.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=4,wid=50/valid/events.out.tfevents.1487627546.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=5,wid=100/train/events.out.tfevents.1487630456.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=5,wid=100/valid/events.out.tfevents.1487630456.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=5,wid=200/train/events.out.tfevents.1487630837.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=5,wid=200/valid/events.out.tfevents.1487630838.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=5,wid=400/train/events.out.tfevents.1487631549.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=5,wid=400/valid/events.out.tfevents.1487631550.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=5,wid=50/train/events.out.tfevents.1487630180.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer/dep=5,wid=50/valid/events.out.tfevents.1487630180.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=0,wid=100/train/events.out.tfevents.1487662062.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=0,wid=100/valid/events.out.tfevents.1487662063.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=0,wid=200/train/events.out.tfevents.1487662372.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=0,wid=200/valid/events.out.tfevents.1487662373.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=0,wid=50/train/events.out.tfevents.1487661815.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=0,wid=50/valid/events.out.tfevents.1487661816.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=2,wid=100/train/events.out.tfevents.1487663089.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=2,wid=100/valid/events.out.tfevents.1487663089.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=2,wid=200/train/events.out.tfevents.1487663438.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=2,wid=200/valid/events.out.tfevents.1487663439.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=2,wid=50/train/events.out.tfevents.1487662862.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=2,wid=50/valid/events.out.tfevents.1487662862.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=4,wid=100/train/events.out.tfevents.1487664256.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=4,wid=100/valid/events.out.tfevents.1487664257.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=4,wid=200/train/events.out.tfevents.1487664619.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=4,wid=200/valid/events.out.tfevents.1487664620.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=4,wid=50/train/events.out.tfevents.1487663999.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layer2/dep=4,wid=50/valid/events.out.tfevents.1487664000.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=1,hidden=100/train/events.out.tfevents.1487622229.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=1,hidden=100/valid/events.out.tfevents.1487622229.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=2,hidden=100/train/events.out.tfevents.1487616691.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=2,hidden=100/valid/events.out.tfevents.1487616692.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=2,hidden=200/train/events.out.tfevents.1487617153.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=2,hidden=200/valid/events.out.tfevents.1487617153.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=2,hidden=400/train/events.out.tfevents.1487617810.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=2,hidden=400/valid/events.out.tfevents.1487617811.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=2,hidden=50/train/events.out.tfevents.1487616370.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/layers/lay=2,hidden=50/valid/events.out.tfevents.1487616371.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.001/train/events.out.tfevents.1489619818.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.001/valid/events.out.tfevents.1489619820.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.002/train/events.out.tfevents.1489621405.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.002/valid/events.out.tfevents.1489621406.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/train/events.out.tfevents.1489622986.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.004/valid/events.out.tfevents.1489622988.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.005/train/events.out.tfevents.1489620304.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.005/valid/events.out.tfevents.1489620306.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.1/train/events.out.tfevents.1489620774.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/lr/conv2,fc2,bn,fs=3,nf=24,wd=0.005,lr=0.1/valid/events.out.tfevents.1489620775.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.0005/train/events.out.tfevents.1487676272.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.0005/valid/events.out.tfevents.1487676273.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.02/train/events.out.tfevents.1487659859.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.02/valid/events.out.tfevents.1487659859.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.025/train/events.out.tfevents.1487660589.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.025/valid/events.out.tfevents.1487660589.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.03/train/events.out.tfevents.1487657244.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.03/valid/events.out.tfevents.1487657244.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.05/train/events.out.tfevents.1487657758.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.05/valid/events.out.tfevents.1487657759.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.07/train/events.out.tfevents.1487658241.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.07/valid/events.out.tfevents.1487658241.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.1/train/events.out.tfevents.1487658715.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sch/lr=0.1/valid/events.out.tfevents.1487658715.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sched/lr=0.01/train/events.out.tfevents.1487633125.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sched/lr=0.01/valid/events.out.tfevents.1487633125.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sched/lr=0.1/train/events.out.tfevents.1487633472.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sched/lr=0.1/valid/events.out.tfevents.1487633472.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sched/lr=0.5/train/events.out.tfevents.1487633808.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/sched/lr=0.5/valid/events.out.tfevents.1487633808.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedule/lr=0.01/train/events.out.tfevents.1487634468.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedule/lr=0.01/valid/events.out.tfevents.1487634468.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedule/lr=0.1/train/events.out.tfevents.1487634819.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedule/lr=0.1/valid/events.out.tfevents.1487634819.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedule/lr=0.3/train/events.out.tfevents.1487635194.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedule/lr=0.3/valid/events.out.tfevents.1487635194.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedules/lr=0.1/train/events.out.tfevents.1487636383.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedules/lr=0.1/valid/events.out.tfevents.1487636383.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedules/lr=0.3/train/events.out.tfevents.1487635915.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/schedules/lr=0.3/valid/events.out.tfevents.1487635915.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph/train/events.out.tfevents.1487636775.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph/valid/events.out.tfevents.1487636776.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph3/train/events.out.tfevents.1487638333.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph3/valid/events.out.tfevents.1487638333.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph4/train/events.out.tfevents.1487639513.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph4/valid/events.out.tfevents.1487639514.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph5/train/events.out.tfevents.1487646928.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph5/train/events.out.tfevents.1487647479.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph5/valid/events.out.tfevents.1487646928.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph5/valid/events.out.tfevents.1487647480.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph6/train/events.out.tfevents.1487647488.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph6/valid/events.out.tfevents.1487647488.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph7/train/events.out.tfevents.1487647991.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph7/valid/events.out.tfevents.1487647991.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph8/train/events.out.tfevents.1487648602.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph8/valid/events.out.tfevents.1487648602.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph9/train/events.out.tfevents.1487649243.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test/graph9/valid/events.out.tfevents.1487649244.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched/lr=0.1/train/events.out.tfevents.1487654041.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched/lr=0.1/valid/events.out.tfevents.1487654041.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched2/lr=0.1/train/events.out.tfevents.1487654815.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched2/lr=0.1/valid/events.out.tfevents.1487654815.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched3/lr=0.15/train/events.out.tfevents.1487655436.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched3/lr=0.15/valid/events.out.tfevents.1487655436.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched3/lr=0.3/train/events.out.tfevents.1487655977.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched3/lr=0.3/valid/events.out.tfevents.1487655978.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched4/lr=0.05/train/events.out.tfevents.1487656497.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/test_sched4/lr=0.05/valid/events.out.tfevents.1487656497.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/trial/train/events.out.tfevents.1489600943.EJMP.home" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/tf-log/trial/valid/events.out.tfevents.1489600943.EJMP.home" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -230,20 +417,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="mlpractical" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlpractical" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlpractical" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="notebooks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -571,9 +744,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2563966" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2563966" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.32970297" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970297" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
