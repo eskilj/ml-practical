@@ -44,18 +44,17 @@ class Conv2dLayer(Layer):
     """
     Convolutional Layer
     """
-    def __init__(self, weights, biases, name, apply_batch_norm=False, weight_decay=None):
+    def __init__(self, weights, biases, name, apply_batch_norm=False):
         super(Conv2dLayer, self).__init__(name)
         self.weights = weights
         self.biases = biases
         self.apply_batch_norm = apply_batch_norm
-        self.weight_decay = weight_decay
 
     def set_outputs(self):
         with tf.name_scope(self.name):
 
             self.biases = _biases(self.biases)
-            self.weights = _weights(self.weights, decay=self.weight_decay)
+            self.weights = _weights(self.weights)
 
             _conv = tf.nn.conv2d(self.inputs, self.weights, [1, 1, 1, 1], padding=DEFAULT_PADDING)
             _pre = tf.nn.bias_add(_conv, self.biases)
@@ -74,11 +73,11 @@ class AffineLayer(Layer):
     """
     Fully Connected Layer
     """
-    def __init__(self, name, flatten_inputs=False, final_layer=False, weight_decay=None):
+    def __init__(self, name, flatten_inputs=False, final_layer=False):
         super(AffineLayer, self).__init__(name)
         self.final_layer = final_layer
         self.flatten_inputs = flatten_inputs
-        self.weight_decay = weight_decay
+        self.weights = None
 
     def set_inputs(self, inputs):
         self.inputs = inputs
@@ -94,7 +93,8 @@ class AffineLayer(Layer):
 
             weights = _weights(
                 [input_dim, output_dim],
-                2. / (input_dim + output_dim) ** 0.5, decay=self.weight_decay)
+                2. / (input_dim + output_dim) ** 0.5)
+            self.weights = weights
             biases = tf.Variable(tf.zeros([output_dim]), name='biases')
 
             if self.final_layer:
@@ -135,10 +135,8 @@ def _bn(inputs, output_dim):
     )
 
 
-def _weights(shape, stddev=0.1, decay=None, name='weights'):
+def _weights(shape, stddev=0.1, name='weights'):
     weights = tf.Variable(tf.truncated_normal(shape=shape, stddev=stddev, name=name))
-    if decay is not None:
-        weights = tf.multiply(tf.nn.l2_loss(weights), decay)
     return weights
 
 

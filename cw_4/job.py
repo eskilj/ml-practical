@@ -87,18 +87,17 @@ class Conv2dLayer(Layer):
     """
     Convolutional Layer
     """
-    def __init__(self, weights, biases, name, apply_batch_norm=False, weight_decay=None):
+    def __init__(self, weights, biases, name, apply_batch_norm=False):
         super(Conv2dLayer, self).__init__(name)
         self.weights = weights
         self.biases = biases
         self.apply_batch_norm = apply_batch_norm
-        self.weight_decay = weight_decay
 
     def set_outputs(self):
         with tf.name_scope(self.name):
 
             self.biases = _biases(self.biases)
-            self.weights = _weights(self.weights, decay=self.weight_decay)
+            self.weights = _weights(self.weights)
 
             _conv = tf.nn.conv2d(self.inputs, self.weights, [1, 1, 1, 1], padding=def_padding)
             _pre = tf.nn.bias_add(_conv, self.biases)
@@ -117,11 +116,11 @@ class AffineLayer(Layer):
     """
     Fully Connected Layer
     """
-    def __init__(self, name, flatten_inputs=False, final_layer=False, weight_decay=None):
+    def __init__(self, name, flatten_inputs=False, final_layer=False):
         super(AffineLayer, self).__init__(name)
         self.final_layer = final_layer
         self.flatten_inputs = flatten_inputs
-        self.weight_decay = weight_decay
+        self.weights = None
 
     def set_inputs(self, inputs):
         self.inputs = inputs
@@ -137,7 +136,8 @@ class AffineLayer(Layer):
 
             weights = _weights(
                 [input_dim, output_dim],
-                2. / (input_dim + output_dim) ** 0.5, decay=self.weight_decay)
+                2. / (input_dim + output_dim) ** 0.5)
+            self.weights = weights
             biases = tf.Variable(tf.zeros([output_dim]), name='biases')
 
             if self.final_layer:
@@ -178,10 +178,8 @@ def _bn(inputs, output_dim):
     )
 
 
-def _weights(shape, stddev=0.1, decay=None, name='weights'):
+def _weights(shape, stddev=0.1, name='weights'):
     weights = tf.Variable(tf.truncated_normal(shape=shape, stddev=stddev, name=name))
-    if decay is not None:
-        weights = tf.multiply(tf.nn.l2_loss(weights), decay)
     return weights
 
 
@@ -191,12 +189,13 @@ def _biases(shape, name='biases'):
 
 class Model:
 
-    def __init__(self, name, layers, activation=tf.nn.relu, train_epochs=10, initial_lr=0.001):
+    def __init__(self, name, layers, activation=tf.nn.relu, train_epochs=10, initial_lr=0.001, l2_loss=None):
         self.name = name or 'unnamed model'
         self.layers = layers
         self.train_epochs = train_epochs
         self.initial_lr = initial_lr
         self.activation = activation
+        self.l2_loss = l2_loss
 
     def get_layers(self, inputs):
         for i, layer in enumerate(self.layers):
@@ -207,6 +206,13 @@ class Model:
                 layer.set_inputs(self.layers[i - 1].outputs)
 
         return self.layers[-1].outputs
+
+    def get_l2_losses(self):
+        weights = []
+        for layer in self.layers:
+            if isinstance(layer, (Conv2dLayer, AffineLayer)):
+                weights.append(tf.nn.l2_loss(layer.weights))
+        return self.l2_loss * sum(weights)
 
     @classmethod
     def trial(cls):
@@ -331,18 +337,19 @@ def main(argv=None):
 
     lrs = [0.005]
     acs = [tf.nn.relu]
-    f_sizes = [3, 5, 7]
-    num_f = [4, 24, 32]
-    epochs = 10
+    f_sizes = [3]
+    num_f = [24]
+    epochs = 40
+    wd = 0.005
 
     for lr in lrs:
         for ac in acs:
             for fs in f_sizes:
                 for nf in num_f:
                     layers = [
-                        Conv2dLayer([fs, fs, 3, nf], [nf], 'conv_1'),
+                        Conv2dLayer([fs, fs, 3, nf], [nf], 'conv_1', True),
                         PoolLayer('pool_1'),
-                        Conv2dLayer([fs, fs, nf, nf], [nf], 'conv_2'),
+                        Conv2dLayer([fs, fs, nf, nf], [nf], 'conv_2', True),
                         PoolLayer('pool_2'),
                         AffineLayer(name='fc_1', flatten_inputs=True),
                         AffineLayer(name='fc_2'),
@@ -350,11 +357,12 @@ def main(argv=None):
                     ]
 
                     _mo = Model(
-                        'cw4/{},fs={},nf={},lr={}'.format(ac.func_name, fs, nf, lr),
+                        'stage2/{},fs={},nf={},lr={},wd={}'.format(ac.func_name, fs, nf, lr, wd),
                         layers=layers,
                         activation=ac,
                         train_epochs=epochs,
-                        initial_lr=lr
+                        initial_lr=lr,
+                        l2_loss=wd
                     )
 
                     if tf.gfile.Exists(os.path.join(FLAGS.train_dir, _mo.name)):

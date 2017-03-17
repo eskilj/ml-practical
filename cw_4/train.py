@@ -54,6 +54,8 @@ def train_graph(model):
         with tf.name_scope('error'):
             error = tf.reduce_mean(
                 tf.nn.softmax_cross_entropy_with_logits(outputs, targets))
+            if model.l2_loss is not None:
+                error = tf.add(error, model.get_l2_losses())
 
         with tf.name_scope('accuracy'):
             accuracy = tf.reduce_mean(
@@ -97,7 +99,7 @@ def train_graph(model):
         train_error[e] /= train_data.num_batches
         train_accuracy[e] /= train_data.num_batches
 
-        if (step % 100 == 0) or (step == last_batch):
+        if (step == 1) or (step % 100 == 0) or (step == last_batch):
             # evaluate validation set performance
             valid_summary, valid_error[e], valid_accuracy[e] = sess.run(
                 [summary_op, error, accuracy],
