@@ -54,6 +54,8 @@ def train_graph(model):
         with tf.name_scope('error'):
             error = tf.reduce_mean(
                 tf.nn.softmax_cross_entropy_with_logits(outputs, targets))
+            if model.l2_loss is not None:
+                error = tf.add(error, model.get_l2_losses())
 
         with tf.name_scope('accuracy'):
             accuracy = tf.reduce_mean(
