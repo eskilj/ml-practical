@@ -7,10 +7,11 @@ best_run = ''
 best_acc2 = 0
 best_run2 = ''
 
-for root, dirs, files in os.walk("../notebooks/tf-log/cw4"):
+for root, dirs, files in os.walk("/home/s1245946/tf-log"):
     for file in files:
         if file.endswith(".npz"):
             path = os.path.join(root, file)
+            print(path)
             data = np.load(path)
             final_acc = data['valid_accuracy'][-1]
             if final_acc > best_acc:
