@@ -29,6 +29,15 @@ Optimizing the training performance of a convolutional neural network (CNN) on i
 
 In addition to improving the overall performance of the training of the network, the experiments were guided by a goal of 70\% accuracy on the test data set. As a result, the methodology and incremental improvements to the model were made on these grounds. 
 
+
+what is being investigated:
+activation functions
+learning rates
+number of feature maps and kernel sizes
+regularization (bartch norm, Local Response Norm. and dropout)
+
+
+
 \section{Methodology}
 
 Establishing a baseline model, and choosing the appropriate algorithms to include, can be a daunting task. Even a relatively small CNN has a large number of tunable parameters, and it can be difficult to know where to begin. The section presents the baseline model chose for the experiments, the procedure used to train the network and the parameters used. 
@@ -38,6 +47,34 @@ Establishing a baseline model, and choosing the appropriate algorithms to includ
 The default baseline model used has two convolutional layers, two fully-connected layers and finally a softmax classification layer. The network also had two 2x2 pooling layers after each convolutional layer. 
 
 Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer was used throughout the investigation. The optimizer was used with varying learning rates, but with beta1=0.9, beta2=0.999 and epsilon = 1e-8. (default parameters) 
+
+\subsubsection{Convolutional Layer}
+
+Convolutional neural networks use kernels, or filters, to take advantage of the spatial structure of it’s inputs. As the kernel is moved across the input image, the values of the resulting feature map are partially determined by the values of the kernel.
+
+The convolution was implemented using the tf.nn.conv2d method from Tensorflow(tf). 
+stride of 1 and no padding. 
+\subsubsection{Fully Connected Layer}
+
+\subsubsection{Pooling Layer}
+
+tf.nn.max\_pool
+
+\subsubsection{Norm Layer}
+
+tf.nn.lrn
+
+\subsubsection{Dropout Layer}
+
+tf.nn.dropout
+
+\subsubsection{Batch Normalization}
+
+\subsubsection{Weights and Biases}
+
+The weights used in both the convolutional and fully connected layers were initialized using a truncated normal distribution. The values were distributed with zero mean and a standard deviation of 0.1. Values more than two standard deviations away from the mean were dropped. The distributions were initialized with the tf.truncated\_normal method. 
+
+The biases used were all initialized to zero using the tf.zeros method. Additionally, the weights and biases were added to the TenorFlow graph using  tf.Variable().
 
 \subsection{Experimental Procedure}
 
@@ -64,6 +101,8 @@ changed max pooling
 http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf
 
 replaced batch norm with lrn
+
+introduced dropout and data augmentation
 
 trained for 40 epochs
 
