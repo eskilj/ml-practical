@@ -337,7 +337,7 @@ def main(argv=None):
 
     lrs = [0.005]
     acs = [tf.nn.relu]
-    f_sizes = [3]
+    f_sizes = [5]
     num_f = [24]
     epochs = 40
     wd = 0.005

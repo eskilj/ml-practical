@@ -56,17 +56,12 @@ class Conv2dLayer(Layer):
             self.biases = _biases(self.biases)
             self.weights = _weights(self.weights)
 
-            _conv = tf.nn.conv2d(self.inputs, self.weights, [1, 1, 1, 1], padding=DEFAULT_PADDING)
-            _pre = tf.nn.bias_add(_conv, self.biases)
+            conv = tf.nn.conv2d(self.inputs, self.weights, [1, 1, 1, 1], padding=DEFAULT_PADDING)
+            conv_bias = tf.nn.bias_add(conv, self.biases, name='conv_bias')
+
             if self.apply_batch_norm:
-                _pre = _bn(_pre, _pre.get_shape()[-1].value)
-            self.outputs = self.activation(_pre)
-            #
-            # w_min = tf.reduce_min(self.weights)
-            # w_max = tf.reduce_max(self.weights)
-            # w_norm = (self.weights - w_min) / (w_max - w_min)
-            # w_norm_trans = tf.transpose(w_norm, [3, 0, 1, 2])
-            # tf.summary.image('{}/kernel'.format(self.name), w_norm_trans)
+                conv_bias = _bn(conv_bias, conv_bias.get_shape()[-1].value)
+            self.outputs = self.activation(conv_bias)
 
 
 class AffineLayer(Layer):
@@ -91,16 +86,13 @@ class AffineLayer(Layer):
             input_dim = self.inputs.get_shape()[1].value
             output_dim = 10 if self.final_layer else int(input_dim/2)
 
-            weights = _weights(
-                [input_dim, output_dim],
-                2. / (input_dim + output_dim) ** 0.5)
-            self.weights = weights
+            self.weights = _weights([input_dim, output_dim])
             biases = tf.Variable(tf.zeros([output_dim]), name='biases')
 
             if self.final_layer:
-                self.outputs = tf.add(tf.matmul(self.inputs, weights), biases)
+                self.outputs = tf.add(tf.matmul(self.inputs, self.weights), biases)
             else:
-                self.outputs = self.activation(tf.matmul(self.inputs, weights) + biases)
+                self.outputs = self.activation(tf.matmul(self.inputs, self.weights) + biases)
 
 
 class PoolLayer(Layer):
@@ -116,10 +108,39 @@ class PoolLayer(Layer):
         with tf.name_scope(self.name):
             self.outputs = tf.nn.max_pool(
                 self.inputs,
-                ksize=[1, 2, 2, 1],
+                ksize=[1, 3, 3, 1],
                 strides=[1, 2, 2, 1],
                 padding=DEFAULT_PADDING,
                 name=self.name)
+
+
+class NormLayer(Layer):
+    """
+    Local Response Norm. Layer
+    https://www.tensorflow.org/versions/master/api_docs/python/nn/normalization
+
+    """
+    def __init__(self, name):
+        super(NormLayer, self).__init__(name)
+
+    def set_outputs(self):
+        with tf.name_scope(self.name):
+            self.outputs = tf.nn.lrn(self.inputs, 4, bias=1.0, alpha=0.0001, beta=0.75,
+                                     name=self.name)
+
+
+class DropoutLayer(Layer):
+    """
+    DropOut Layer
+    """
+
+    def __init__(self, keep_prob, name):
+        super(DropoutLayer, self).__init__(name)
+        self.keep_prob = keep_prob
+
+    def set_outputs(self):
+        with tf.name_scope(self.name):
+            self.outputs = tf.nn.dropout(self.inputs, keep_prob=self.keep_prob, name=self.name)
 
 
 # OTHER HELPER METHODS

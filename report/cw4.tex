@@ -35,7 +35,9 @@ Establishing a baseline model, and choosing the appropriate algorithms to includ
 
 \subsection{The Baseline Model}
 
-baseline model
+The default baseline model used has two convolutional layers, two fully-connected layers and finally a softmax classification layer. The network also had two 2x2 pooling layers after each convolutional layer. 
+
+Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer was used throughout the investigation. The optimizer was used with varying learning rates, but with beta1=0.9, beta2=0.999 and epsilon = 1e-8. (default parameters) 
 
 \subsection{Experimental Procedure}
 
@@ -43,16 +45,32 @@ The procedure used to tune the performance of the network involved three stages.
 
 \subsubsection{Stage 1: Initial Training and Model Verification}
 
-activation functions and initial learning rates
+Initially the model was trained using three learning rates, with the four activation functions used in the preliminary experiments: ReLu, Elu, Tahn and Sigmoid. These were tested with a learning rate of 0.0005, 0.005 and 0.1. The relatively large, non-uniform spread of the learning rate was chosen intentionally to observe how the activation functions would react to the rates.
 
-number of filter channels, and kernel sizes
+After the initial trials, the best activation function and learning rate was chosen for the rest of the trials in Stage 1. 
 
-batch normalization and l2 loss
+Next a variety of combinations of kernel sizes and feature maps were tested. The size of kernels were 3, 5 and 7, whereas the number of feature maps were 4, 24 and 32. Here as well, the best combination was chosen for the following trials.
 
 
-\subsubsection{Stage 2: Fine-tuning hyper parameters} 
+with and without batch normalization and l2 loss
+
+trained for 10 epochs
+
+
+\subsubsection{Stage 2: Fine-tuning hyper parameters}
+
+
+changed max pooling
+http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf
+
+replaced batch norm with lrn
+
+trained for 40 epochs
+
 
 \subsubsection{Stage 2: Finding the one and Testing}
+
+trained for 100 epochs
  
  
 \section{Results and Discussion}
