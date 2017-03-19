@@ -7,7 +7,7 @@ best_run = ''
 best_acc2 = 0
 best_run2 = ''
 
-for root, dirs, files in os.walk("/home/s1245946/tf-log"):
+for root, dirs, files in os.walk("/home/s1245946/tf-log/stage2"):
     for file in files:
         if file.endswith(".npz"):
             path = os.path.join(root, file)
