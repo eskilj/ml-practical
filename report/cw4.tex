@@ -25,9 +25,48 @@
 
 \section{Introduction}
 
-Optimizing the training performance of a convolutional neural network (CNN) on image classification task, CIFAR 10. Building on a baseline set of experiments, done with a deep neural network, the presented () tries to improve the performance of the more advanced methods used here. 
+Fully connected networks offer good performance at a relatively efficient computational cost, however, current state-of-the-art networks are all convolutional neural networks (CNN). This report presents a series of experiments set to optimize the training performance of a CNN on a image classification task, using the CIFAR 10 dataset \cite{cifar10}.
+
+Building on a baseline set of experiments, done with a fully connected neural network, 
+
+the presented procedure tries to improve the performance of the more advanced methods used here. 
 
 In addition to improving the overall performance of the training of the network, the experiments were guided by a goal of 70\% accuracy on the test data set. As a result, the methodology and incremental improvements to the model were made on these grounds. 
+
+
+
+
+what is being investigated:
+activation functions
+learning rates
+number of feature maps and kernel sizes
+regularization (bartch norm, Local Response Norm. and dropout)
+
+\subsection{Background}
+
+Preliminary experiments have been conducted on the same data, using a fully connected neural network. The network was trained using a variety of activation functions, hidden layer depths and widths as well as learning rate scheduler. 
+
+\subsubsection{Activation Functions}
+
+Four activation functions were compared. The logistic sigmoid $f(x)=\frac{1}{1+e^{-x}}$, the hyperbolic tangent $f(x)=tanh(x)$ the rectified linear (ReLu) $f(x)=max(0,x)$ and the exponential linear unit (ELU):
+
+\begin{equation} \label{eq:elu}
+f(x) = \begin{cases}
+x &\text{if $x >$ 0}\\ \alpha (\text{exp}(x) - 1) &\text{if  $x \leq$ 0}
+\end{cases}
+\end{equation}
+
+where \(\alpha\) is a hyperparameter that decides the range of negative values for which the activation function saturates.
+
+The results showed that the ELU activation function outperformed the other three, with a final training and validation set accuracy of 66.9 \% and 50.5\% respectively. 
+
+\subsubsection{Hidden layers}
+
+\subsubsection{Learning Rate Schedule}
+
+\section{Network Architecture}
+
+
 
 \section{Methodology}
 
@@ -35,24 +74,94 @@ Establishing a baseline model, and choosing the appropriate algorithms to includ
 
 \subsection{The Baseline Model}
 
-baseline model
+The default baseline model used has two convolutional layers, two fully-connected layers and finally a softmax classification layer. The network also had two 2x2 pooling layers after each convolutional layer. 
+
+Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer was used throughout the investigation. The optimizer was used with varying learning rates, but with beta1=0.9, beta2=0.999 and epsilon = 1e-8. (default parameters) 
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{conv}
+	\caption{Showing a visual representation of the model used, from TensorBoard.}
+	\label{conv}
+	\centering
+\end{figure}
+
+\subsubsection{Convolutional Layer}
+
+Convolutional neural networks use kernels, or filters, to take advantage of the spatial structure of it’s inputs. As the kernel is moved across the input image, the values of the resulting feature map are determined by the values of the kernel.
+
+The convolution was implemented using the \texttt{tf.nn.conv2d} method from Tensorflow(tf) with stride of 1 and no padding (\texttt{padding='SAME'}). 
+
+\subsubsection{Fully Connected Layer}
+
+
+
+\subsubsection{Pooling Layer}
+
+\texttt{tf.nn.max\_pool}
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{pool}
+	\caption{Showing a visual representation of the model used, from TensorBoard.}
+	\label{pool}
+	\centering
+\end{figure}
+
+\subsubsection{Norm Layer}
+
+tf.nn.lrn
+
+\subsubsection{Dropout Layer}
+
+tf.nn.dropout
+
+\subsubsection{Batch Normalization}
+
+\subsubsection{Weights and Biases}
+
+The weights used in both the convolutional and fully connected layers were initialized using a truncated normal distribution. The values were distributed with zero mean and a standard deviation of 0.1. Values more than two standard deviations away from the mean were dropped. The distributions were initialized with the tf.truncated\_normal method. 
+
+The biases used were all initialized to zero using the tf.zeros method. Additionally, the weights and biases were added to the TenorFlow graph using  tf.Variable().
 
 \subsection{Experimental Procedure}
 
 The procedure used to tune the performance of the network involved three stages. During the initial stage the network was trained for few epochs, with a coarse spread of hyper parameter and multiple algorithms were tested during this phase. The overall results from the initial trials informed the finer range of parameters used for additional training and further tuning of hyper parameters. The second stage involved longer training. The third stage, before the final testing, the model was trained for significantly longer, and only three varieties of the model were used. 
 
-\subsubsection{Stage 1: Initial Training and Model Verification}
+\subsubsection{Activation Functions}
 
-activation functions and initial learning rates
+Initially the model was trained using three learning rates, with the four activation functions used in the preliminary experiments: ReLu, Elu, Tahn and Sigmoid. These were tested with a learning rate of 0.0005, 0.003 and 0.01, and the network was trained for 5 epochs. The relatively large, non-uniform spread of the learning rate was chosen intentionally to observe how the activation functions would react to the rates.
 
-number of filter channels, and kernel sizes
+After the initial trials, the best two activation functions were kept for further experimentation, and the other two were discarded. The worst learning rate for each of the remaining activation functions was also replaced with another learning rate, trying to narrow down the region of learning rates for which the training of the network performs better. For the second round of trials, the network was trained for 10 epochs. 
 
-batch normalization and l2 loss
+The second round informed the activation function to be used for the last round, and again the learning rates were narrowed down further. The last set of trials, for the activation functions, the network was trained for 20 epochs. The learning rate that resulted in best performance was then used for the during the later experiments. 
+
+The activation functions and learning rates were tested using two convolutional layers with 3x3 kernels and 24 feature maps. The model also had a 3x3 pooling layer with stride of two after each convolutional layer. After the tensors were flattened, the network had two fully connected layers before a final softmax classification layer. The network used the Adam optimizer. 
+
+\subsubsection{Filter Sizes and Feature Maps}
+
+The kernels are responsible for extracting features from the input data, and their sizes as well the the number of feature maps output will affect the performance of a network. 
+
+Next of combinations of kernel sizes and feature maps were tested. The size of kernels were 3, 5 and 7, whereas the number of feature maps were 16, 24 and 32. Here as well, the best combination was chosen for the following trials.
 
 
-\subsubsection{Stage 2: Fine-tuning hyper parameters} 
+with and without batch normalization and l2 loss
+
+trained for 10 epochs
+
+changed max pooling
+http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf
+
+replaced batch norm with lrn
+
+introduced dropout and data augmentation
+
+trained for 40 epochs
+
+\subsubsection{Regularization and Normalization}
+
 
 \subsubsection{Stage 2: Finding the one and Testing}
+
+trained for 100 epochs
  
  
 \section{Results and Discussion}
