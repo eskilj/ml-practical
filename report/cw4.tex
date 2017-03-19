@@ -36,6 +36,12 @@ learning rates
 number of feature maps and kernel sizes
 regularization (bartch norm, Local Response Norm. and dropout)
 
+\subsection{Background}
+
+Preliminary experiments have been conducted on the same data, using a deep neural network(dnn). The network was trained using a variety of activation functions, hidden units and learning rate scheduler. 
+
+\section{Network Architecture}
+
 
 
 \section{Methodology}
@@ -52,13 +58,22 @@ Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer 
 
 Convolutional neural networks use kernels, or filters, to take advantage of the spatial structure of it’s inputs. As the kernel is moved across the input image, the values of the resulting feature map are partially determined by the values of the kernel.
 
-The convolution was implemented using the tf.nn.conv2d method from Tensorflow(tf). 
+The convolution was implemented using the \texttt{tf.nn.conv2d} method from Tensorflow(tf). 
 stride of 1 and no padding. 
 \subsubsection{Fully Connected Layer}
 
+
+
 \subsubsection{Pooling Layer}
 
-tf.nn.max\_pool
+\texttt{tf.nn.max\_pool}
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{pool}
+	\caption{Showing a visual representation of the model used, from TensorBoard.}
+	\label{pool}
+	\centering
+\end{figure}
 
 \subsubsection{Norm Layer}
 

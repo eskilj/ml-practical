@@ -4,9 +4,6 @@
     <list default="true" id="ed84c279-e65c-4ddb-b7b0-66733b2dbda6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.pdf" afterPath="$PROJECT_DIR$/report/cw4.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.synctex.gz" afterPath="$PROJECT_DIR$/report/cw4.synctex.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/cw4-checkpoint.ipynb" afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/cw4-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/cw4.ipynb" afterPath="$PROJECT_DIR$/notebooks/cw4.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.aux" afterPath="$PROJECT_DIR$/report/cw4.aux" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.tex" afterPath="$PROJECT_DIR$/report/cw4.tex" />
     </list>
@@ -45,8 +42,8 @@
       <file leaf-file-name="layer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cw_4/layer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="896">
-              <caret line="155" column="5" lean-forward="true" selection-start-line="155" selection-start-column="5" selection-end-line="155" selection-end-column="5" />
+            <state relative-caret-position="698">
+              <caret line="110" column="27" lean-forward="false" selection-start-line="110" selection-start-column="27" selection-end-line="110" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -1126,8 +1123,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cw_4/layer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="896">
-          <caret line="155" column="5" lean-forward="true" selection-start-line="155" selection-start-column="5" selection-end-line="155" selection-end-column="5" />
+        <state relative-caret-position="698">
+          <caret line="110" column="27" lean-forward="false" selection-start-line="110" selection-start-column="27" selection-end-line="110" selection-end-column="27" />
           <folding />
         </state>
       </provider>
