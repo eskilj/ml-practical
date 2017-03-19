@@ -106,7 +106,7 @@ def train_graph(model):
                 feed_dict={inputs: _valid_inputs, targets: valid_targets})
             valid_writer.add_summary(valid_summary, step)
             # checkpoint model variables
-            saver.save(sess, os.path.join(checkpoint_dir, 'model.ckpt'), step)
+            # saver.save(sess, os.path.join(checkpoint_dir, 'model.ckpt'), step)
             # write stats summary to stdout
             print('Epoch {0:02d}: err(train)={1:.2f} acc(train)={2:.2f}'
                   .format(e + 1, train_error[e], train_accuracy[e]))

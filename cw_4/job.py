@@ -312,7 +312,7 @@ def train_graph(model):
                 feed_dict={inputs: _valid_inputs, targets: valid_targets})
             valid_writer.add_summary(valid_summary, step)
             # checkpoint model variables
-            saver.save(sess, os.path.join(checkpoint_dir, 'model.ckpt'), step)
+            # saver.save(sess, os.path.join(checkpoint_dir, 'model.ckpt'), step)
             # write stats summary to stdout
             print('Epoch {0:02d}: err(train)={1:.2f} acc(train)={2:.2f}'
                   .format(e + 1, train_error[e], train_accuracy[e]))
@@ -335,21 +335,21 @@ def train_graph(model):
 
 def main(argv=None):
 
-    lrs = [0.005]
+    lrs = [0.0005]
     acs = [tf.nn.relu]
-    f_sizes = [5]
-    num_f = [24]
-    epochs = 40
-    wd = 0.005
+    f_sizes = [3, 5, 7]
+    num_f = [16, 24, 32]
+    epochs = 5
+    wd = None
 
     for lr in lrs:
         for ac in acs:
             for fs in f_sizes:
                 for nf in num_f:
                     layers = [
-                        Conv2dLayer([fs, fs, 3, nf], [nf], 'conv_1', True),
+                        Conv2dLayer([fs, fs, 3, nf], [nf], 'conv_1'),
                         PoolLayer('pool_1'),
-                        Conv2dLayer([fs, fs, nf, nf], [nf], 'conv_2', True),
+                        Conv2dLayer([fs, fs, nf, nf], [nf], 'conv_2'),
                         PoolLayer('pool_2'),
                         AffineLayer(name='fc_1', flatten_inputs=True),
                         AffineLayer(name='fc_2'),
@@ -357,7 +357,7 @@ def main(argv=None):
                     ]
 
                     _mo = Model(
-                        'stage2/{},fs={},nf={},lr={},wd={}'.format(ac.func_name, fs, nf, lr, wd),
+                        'filter/{},fs={},nf={},lr={},wd={}'.format(ac.func_name, fs, nf, lr, wd),
                         layers=layers,
                         activation=ac,
                         train_epochs=epochs,
