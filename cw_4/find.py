@@ -8,14 +8,16 @@ best_run = ''
 best_acc2 = 0
 best_run2 = ''
 
+for root, dirs, 
 fig = plt.figure(figsize=(12, 6))
 ax1 = fig.add_subplot(1, 2, 1)
 ax2 = fig.add_subplot(1, 2, 2)
 
-for root, dirs, files in os.walk("../notebooks/tf-log/filter"):
+for root, dirs, files in os.walk("~/s1245946/tf-log/filter"):
     for file in files:
         if file.endswith(".npz"):
             path = os.path.join(root, file)
+            print(path)
             data = np.load(path)
             final_acc = data['valid_accuracy'][-1]
             if 'epochs=5' in path:
