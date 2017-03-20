@@ -8,6 +8,7 @@
 \usepackage[parfill]{parskip}
 \usepackage{pgfgantt}
 \usepackage{multicol}
+\usepackage{multirow}
 \usepackage{tikz}
 \usepackage{pgfplots}
 
@@ -146,23 +147,15 @@ The architecture and training parameters remained the same as for the experiment
 
 \subsubsection{Regularization and Normalization}
 
+Without any normalization or regularization significant over-fitting can occur during training of the network. 
 
-with and without batch normalization and l2 loss
+As with the previous experiments, short trials were run using coarse set of parameters. Using three nested loops, the network was trained using eight different combinations of batch normalization, drop out and L2 weight decay. The batch normalization added to the convolutional layers were either true or false, the L2 decay was none or 0.0005 and the keep probability of the dropout layers were either 1.0 (keep all) or 0.5. The network was trained for 5 epochs during the first set of trials. 
 
-trained for 10 epochs
 
-changed max pooling
-http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf
-
-replaced batch norm with lrn
 
 introduced dropout and data augmentation
 
 trained for 40 epochs
-
-\subsubsection{Stage 2: Finding the one and Testing}
-
-trained for 100 epochs
  
  
 \section{Results and Discussion}
@@ -182,7 +175,23 @@ The last set of trials gave very similar results, see Figure \ref{ac_res}. The h
 	\centering
 \end{figure}
 
+\subsection{Filter Sizes and Feature Maps}
 
+\begin{table}[]
+	\centering
+	\caption{My caption}
+	\label{my-label}
+	\begin{tabular}{@{}ccccc@{}}
+		\toprule
+		\multicolumn{2}{c}{feature maps} & 16 & 24 & 32 \\ \midrule
+		\multirow{3}{*}{test} & \multicolumn{1}{c|}{3} & 12.5 & 19.1 & 27.0 \\
+		& \multicolumn{1}{c|}{5} & 22.5 & 34.6 & 49.1 \\
+		& \multicolumn{1}{c|}{7} & 39.9 & 57.9 & 67.0 \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+
+\subsubsection{Regularization and Normalization}
 
 \section{Conclusion}
 
