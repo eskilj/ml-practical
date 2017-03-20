@@ -140,7 +140,11 @@ The activation functions and learning rates were tested using two convolutional 
 
 The kernels are responsible for extracting features from the input data, and their sizes as well the the number of feature maps output will affect the performance of a network. 
 
-Next of combinations of kernel sizes and feature maps were tested. The size of kernels were 3, 5 and 7, whereas the number of feature maps were 16, 24 and 32. Here as well, the best combination was chosen for the following trials.
+The network was trained using a number of combinations of kernel sizes and feature maps in each of the convolutional layers. The size of kernels were 3, 5 and 7, whereas the number of feature maps were 16, 24 and 32. Here as well, the best combination was chosen for the following trials.
+
+The architecture and training parameters remained the same as for the experiments on the activation functions, except the ELU activation function was used with a learning rate of 0.0004. 
+
+\subsubsection{Regularization and Normalization}
 
 
 with and without batch normalization and l2 loss
@@ -156,15 +160,29 @@ introduced dropout and data augmentation
 
 trained for 40 epochs
 
-\subsubsection{Regularization and Normalization}
-
-
 \subsubsection{Stage 2: Finding the one and Testing}
 
 trained for 100 epochs
  
  
 \section{Results and Discussion}
+
+\subsection{Activation Functions}
+
+After the model was trained with all four transformation functions, the ReLu and ELU performed significantly better than the sigmoid and hyperbolic tangent. The first 5 epoch trial showed that a learning rate of 0.01 was too large, and resulted in high total error and low accuracies around 0.1, which meant the final classifications were merely guesses. The lowest learning rate, 0.0005, resulted in the highest accuracies across all the activation functions, and the ReLu trial had a final validation accuracy of 70.3\%. 
+
+During the second round of trials, the network was trained with the ReLu and ELU activation functions, with learning rates of 0.0009 and 0.0001. After training the network for 10 epochs, the performance decreased for both activation functions, suggesting the better learning rates were closer to 0.0005. The final trial was then run with learning rates of 0.0004 and 0.0007. 
+
+The last set of trials gave very similar results, see Figure \ref{ac_res}. The highest validation accuracy was 71.6\%, by ELU with the learning rate of 0.0004, and the lowest was 69.7\% by ReLu with the learning rate of 0.0007. Although the validation accuracy was over 70\%, the training set accuracies were much higher, which indicates a high degree of over-fitting. The over-fitting was also reflected in the validation set errors, as can be seen in Figure. 
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{ac_res}
+	\caption{Showing a visual representation of the model used, from TensorBoard.}
+	\label{ac_res}
+	\centering
+\end{figure}
+
+
 
 \section{Conclusion}
 
