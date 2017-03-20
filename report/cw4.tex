@@ -11,7 +11,7 @@
 \usepackage{multirow}
 \usepackage{tikz}
 \usepackage{pgfplots}
-
+\newcommand*\rot{\rotatebox{90}}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 
@@ -177,18 +177,21 @@ The last set of trials gave very similar results, see Figure \ref{ac_res}. The h
 
 \subsection{Filter Sizes and Feature Maps}
 
-\begin{table}[]
+The number of feature maps had a greater impact on the training performance, compared to the size of the kernels. As shown in Figure , the three best performing trials were all using convolutional layers with 32 feature maps. 
+
+\begin{table}[h]
 	\centering
-	\caption{My caption}
+	\caption{Showing the training execution time, in minutes, for 5 epochs for different kernel sizes and number of feature maps in the convolutional layers.}
 	\label{my-label}
 	\begin{tabular}{@{}ccccc@{}}
 		\toprule
-		\multicolumn{2}{c}{feature maps} & 16 & 24 & 32 \\ \midrule
-		\multirow{3}{*}{test} & \multicolumn{1}{c|}{3} & 12.5 & 19.1 & 27.0 \\
-		& \multicolumn{1}{c|}{5} & 22.5 & 34.6 & 49.1 \\
-		& \multicolumn{1}{c|}{7} & 39.9 & 57.9 & 67.0 \\ \bottomrule
+		\multicolumn{2}{c}{Feature Maps} & 16 & 24 & 32 \\ \midrule
+		\multirow{3}{*}{\rot{Size}} & \multicolumn{1}{c|}{3x3} & 12.5 & 19.1 & 27.0 \\
+		& \multicolumn{1}{c|}{5x5} & 22.5 & 34.6 & 49.1 \\
+		& \multicolumn{1}{c|}{7x7} & 39.9 & 57.9 & 67.0 \\ \bottomrule
 	\end{tabular}
 \end{table}
+
 
 
 \subsubsection{Regularization and Normalization}

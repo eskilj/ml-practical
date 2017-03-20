@@ -164,6 +164,21 @@ class PoolLayer(Layer):
                 padding=def_padding,
                 name=self.name)
 
+class DropoutLayer(Layer):
+    """
+    DropOut Layer
+    """
+
+    def __init__(self, keep_prob, name):
+        super(DropoutLayer, self).__init__(name)
+        self.keep_prob = keep_prob
+
+    def set_outputs(self):
+        with tf.name_scope(self.name):
+            self.outputs = tf.nn.dropout(self.inputs,
+                                         keep_prob=self.keep_prob,
+                                         name=self.name)
+
 
 # OTHER HELPER METHODS
 
@@ -335,29 +350,32 @@ def train_graph(model):
 
 def main(argv=None):
 
-    lrs = [0.0005]
-    acs = [tf.nn.relu]
-    f_sizes = [3, 5, 7]
-    num_f = [16, 24, 32]
-    epochs = 5
-    wd = None
+    lrs = [0.0004]
+    acs = [tf.nn.elu]
+    f_sizes = [3]
+    num_f = [32]
+    epochs = 100
+    wd = 0.0005
+    do = 0.55
 
     for lr in lrs:
         for ac in acs:
             for fs in f_sizes:
                 for nf in num_f:
                     layers = [
-                        Conv2dLayer([fs, fs, 3, nf], [nf], 'conv_1'),
+                        Conv2dLayer([fs, fs, 3, nf], [nf], 'conv_1', True),
                         PoolLayer('pool_1'),
-                        Conv2dLayer([fs, fs, nf, nf], [nf], 'conv_2'),
+                        DropoutLayer(do, 'dropout_1'),
+                        Conv2dLayer([fs, fs, nf, nf], [nf], 'conv_2', True),
                         PoolLayer('pool_2'),
+                        DropoutLayer(do, 'dropout_2'),
                         AffineLayer(name='fc_1', flatten_inputs=True),
                         AffineLayer(name='fc_2'),
                         AffineLayer(name='output', final_layer=True)
                     ]
 
                     _mo = Model(
-                        'filter/{},fs={},nf={},lr={},wd={}'.format(ac.func_name, fs, nf, lr, wd),
+                        'final/{},fs={},nf={},lr={},wd={}'.format(ac.func_name, fs, nf, lr, wd),
                         layers=layers,
                         activation=ac,
                         train_epochs=epochs,
