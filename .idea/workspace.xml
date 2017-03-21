@@ -4,16 +4,11 @@
     <list default="true" id="ed84c279-e65c-4ddb-b7b0-66733b2dbda6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.pdf" afterPath="$PROJECT_DIR$/report/cw4.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.synctex.gz" afterPath="$PROJECT_DIR$/report/cw4.synctex.gz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/images/conv.png" afterPath="$PROJECT_DIR$/report/images/conv.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cw_4/find.py" afterPath="$PROJECT_DIR$/cw_4/find.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/cw4-checkpoint.ipynb" afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/cw4-checkpoint.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notebooks/cw4.ipynb" afterPath="$PROJECT_DIR$/notebooks/cw4.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.aux" afterPath="$PROJECT_DIR$/report/cw4.aux" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.bbl" afterPath="$PROJECT_DIR$/report/cw4.bbl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.blg" afterPath="$PROJECT_DIR$/report/cw4.blg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/cw4.tex" afterPath="$PROJECT_DIR$/report/cw4.tex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/ref.bib" afterPath="$PROJECT_DIR$/report/ref.bib" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,8 +45,8 @@
       <file leaf-file-name="layer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cw_4/layer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="159" column="45" lean-forward="false" selection-start-line="159" selection-start-column="26" selection-end-line="159" selection-end-column="45" />
+            <state relative-caret-position="324">
+              <caret line="133" column="17" lean-forward="true" selection-start-line="133" selection-start-column="17" selection-end-line="133" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -60,8 +55,8 @@
       <file leaf-file-name="cifar10.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cifar10/cifar10.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="211" column="21" lean-forward="false" selection-start-line="211" selection-start-column="21" selection-end-line="211" selection-end-column="21" />
+            <state relative-caret-position="-242">
+              <caret line="224" column="57" lean-forward="false" selection-start-line="224" selection-start-column="57" selection-end-line="224" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -90,7 +85,7 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cw_4/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="770">
+            <state relative-caret-position="192">
               <caret line="39" column="23" lean-forward="false" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
@@ -1034,13 +1029,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/miniconda2/envs/mlp/lib/python2.7/site-packages/tensorflow/python/ops/nn_ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="1148" column="4" lean-forward="false" selection-start-line="1148" selection-start-column="4" selection-end-line="1148" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cifar10/cifar10_train.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -1070,16 +1058,6 @@
         <state relative-caret-position="2860">
           <caret line="143" column="63" lean-forward="false" selection-start-line="143" selection-start-column="34" selection-end-line="143" selection-end-column="63" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cw_4/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="39" column="23" lean-forward="false" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1118,14 +1096,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cifar10/cifar10.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="211" column="21" lean-forward="false" selection-start-line="211" selection-start-column="21" selection-end-line="211" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cw_4/model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -1134,10 +1104,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cw_4/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="39" column="23" lean-forward="false" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cifar10/cifar10.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-242">
+          <caret line="224" column="57" lean-forward="false" selection-start-line="224" selection-start-column="57" selection-end-line="224" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda2/envs/mlp/lib/python2.7/site-packages/tensorflow/python/ops/nn_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="526">
+          <caret line="1715" column="0" lean-forward="true" selection-start-line="1715" selection-start-column="0" selection-end-line="1715" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cw_4/layer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="159" column="45" lean-forward="false" selection-start-line="159" selection-start-column="26" selection-end-line="159" selection-end-column="45" />
+        <state relative-caret-position="324">
+          <caret line="133" column="17" lean-forward="true" selection-start-line="133" selection-start-column="17" selection-end-line="133" selection-end-column="17" />
           <folding />
         </state>
       </provider>

@@ -74,18 +74,16 @@ The results showed that the ELU activation function outperformed the other three
 
 \section{Methodology}
 
-1. Object of study
 2. Treatment for the object (what do to object)
 3. Procedure to collect data
 4. Procedure to analyze data
 
-i - The model, and why it was chosen
-
-"Liberty apple cultivar was chosen for this study, because it is highly prone to browning."
 
 \subsection{The Network Architecture}
 
 A neural network with two convolutional and two fully connected hidden layers was chosen for this study. The network also had two max pooling layers, one after each convolutional layer, as well as a 10-way softmax output classification. 
+
+Why this model?
 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{conv}
@@ -96,40 +94,52 @@ A neural network with two convolutional and two fully connected hidden layers wa
 
 \subsubsection{Convolutional Layer}
 
-The convolution was implemented using the \texttt{tf.nn.conv2d} method from Tensorflow(tf) with stride of 1 and no padding (\texttt{padding='SAME'}). 
+The convolution was implemented using the \texttt{tf.nn.conv2d} method from TensorFlow (tf) with stride of 1 and no padding (\texttt{padding='SAME'}). The convolution operation was executed on the layer inputs together with the kernels (using the specified stride and padding). Both the layer inputs and the kernels were TensorFlow tensors, and the result of the convolutional operation was also a TensorFlow tensor. 
 
-A truncated normal distribution was use to innitialize the kernels, and the biases were initialized to zero. See Section \ref{weights}, Weight and Biases, for the specific implementations in TensorFlow. 
+The biases were added to the tensor after the convolution. In the convolutional layers where batch normalization was specified, ... . Finally, an activation function was applied to the tensor, before passing the output on to the next layer. 
 
-\subsubsection{Fully Connected Layer}
+A truncated normal distribution was use to initialize the kernels, and the biases were initialized to zero. See Section \ref{weights}, Weight and Biases, for the specific implementation in TensorFlow. 
 
+\subsubsection{Fully Connected and Output prediction Layer}
 
+The fully connected and the classification output layers were implemented using the same class, as only a few factors separate the behavior of the two. A constant halving of the number of hidden units were integrated into all the fully connected layers, except the output prediction layer which had a 10-was output.
+
+The weights and biases were initialized in the same as mentioned for the convolutional layers, only the weights for the affine layers were two dimensional. 
+
+Finally, the inputs were multiplied with the weights using \texttt{tf.matmul} ,before the biases were added to the tensor. For the final classification layer this tensor would be returned, otherwise an activation function would be applied before returning the tensor.
 
 \subsubsection{Pooling Layer}
 
-\texttt{tf.nn.max\_pool}
+The max pooling layer was implemented using the \texttt{tf.nn.max\_pool} method from TensorFlow. Each pooling layer used a 3 by 3 window for the sampling, and a stride of 2. Similarly to the convolutional layer the pooling layer used no padding, \texttt{padding='SAME'} in TensorFlow. 
 
 \begin{figure}[h]
-	\includegraphics[width=\textwidth]{pool}
-	\caption{Showing a visual representation of the model used, from TensorBoard.}
+	\centering
+	\includegraphics[width=0.6\textwidth]{pool}
+	\caption{Showing an example of a 2x2 max pool operation.}
 	\label{pool}
 	\centering
 \end{figure}
 
-\subsubsection{Norm Layer}
-
-tf.nn.lrn
-
 \subsubsection{Dropout Layer}
 
-tf.nn.dropout
+The dropout layer was implemented using \texttt{tf.nn.dropout(inputs, keep\_prop)}, and will keep each element in the input tensor with a probability of \texttt{keep\_prob}. 
 
 \subsubsection{Batch Normalization}
 
+The batch normalization of the convolutional layer was achieved with the \texttt{tf.nn.max\_pool} method from TensorFlow. Batch normalization transforms its input to zero mean and unit variance. By statistical analysis the batch normalization normalizes the inputs of a transformation layer. Equation \ref{batch_eq} shows how the inputs \(x_i\) are normalized
+
+\begin{equation} \label{batch_eq}
+BN(x_i) = \gamma_i \Big( \frac{x_i - \mu_i}{\sqrt{\sigma_i^2 + \epsilon}} \Big) + \beta_i
+\end{equation}
+
+where \(\mu_i\) is the batch mean, \(\sigma_i^2\) is the batch variance, \(\gamma_i\) is a scale factor and \(\beta_i\) is a shift factor. \(\gamma_i\) was set to 1.0, \(\beta_i\) to zero and \(\epsilon\) to 1e-3. The batch mean and variance was obtained from the inputs using \texttt{tf.nn.moments}. 
+
+
 \subsubsection{Weights and Biases} \label{weights}
 
-The weights used in both the convolutional and fully connected layers were initialized using a truncated normal distribution. The values were distributed with zero mean and a standard deviation of 0.1. Values more than two standard deviations away from the mean were dropped. The distributions were initialized with the tf.truncated\_normal method. 
+The weights used in both the convolutional and fully connected layers were initialized using a truncated normal distribution. The values were distributed with zero mean and a standard deviation of 0.1. Values more than two standard deviations away from the mean were dropped. The distributions were initialized with the \texttt{tf.truncated\_normal} method. 
 
-The biases used were all initialized to zero using the tf.zeros method. Additionally, the weights and biases were added to the TenorFlow graph using  tf.Variable().
+The biases used were all initialized to zero using the tf.zeros method. Additionally, the weights and biases were added to the TensorFlow. graph using  tf.Variable().
 
 \subsection{Experimental Procedure}
 
