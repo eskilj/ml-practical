@@ -9,6 +9,7 @@
 \usepackage{pgfgantt}
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage{tablefootnote}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \newcommand*\rot{\rotatebox{90}}
@@ -40,7 +41,7 @@ This report presents a series of experiments set to investigate how some key com
 	
 	\item How does the choice of activation function impact the performance of the network?
 	
-	\item What type, and magnitude, of regularization is needed to overcome potential over-fitting of the CNN?
+	\item What type, and magnitude, of regularization is needed to overcome potential over-fitting of the CNN? Without any normalization or regularization significant over-fitting can occur during training of the network. MORE +++
 	
 \end{itemize}
 
@@ -115,7 +116,7 @@ The max pooling layer was implemented using the \texttt{tf.nn.max\_pool} method 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{pool}
-	\caption{Showing an example of a 2x2 max pool operation.}
+	\caption{Showing an example of a 2x2 max pool operation. The 3x3 equivalent operation was used throughout this investigation.}
 	\label{pool}
 	\centering
 \end{figure}
@@ -145,44 +146,83 @@ The biases used were all initialized to zero using the tf.zeros method. Addition
 
 The procedure used to tune the performance of the network involved three stages. During the initial stage the network was trained for few epochs, with a coarse spread of hyper parameter and multiple algorithms were tested during this phase. The overall results from the initial trials informed the finer range of parameters used for additional training and further tuning of hyper parameters. The second stage involved longer training. The third stage, before the final testing, the model was trained for significantly longer, and only three varieties of the model were used. 
 
-
 The default baseline model used has two convolutional layers, two fully-connected layers and finally a softmax classification layer. The network also had two 2x2 pooling layers after each convolutional layer. 
 
 Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer was used throughout the investigation. The optimizer was used with varying learning rates, but with beta1=0.9, beta2=0.999 and epsilon = 1e-8. (default parameters) 
 
-
 \subsubsection{Activation Functions}
 
-Initially the model was trained using three learning rates, with the four activation functions used in the preliminary experiments: ReLu, Elu, Tahn and Sigmoid. These were tested with a learning rate of 0.0005, 0.003 and 0.01, and the network was trained for 5 epochs. The relatively large, non-uniform spread of the learning rate was chosen intentionally to observe how the activation functions would react to the rates.
+The model was trained using three learning rates, with the four activation functions used in the preliminary experiments: ReLu, Elu, Tahn and Sigmoid. During the first round of trials the network was trained for 5 epochs. A relatively large, non-uniform spread of the learning rate was chosen intentionally to observe how the activation functions would react to the different rates. 
 
-After the initial trials, the best two activation functions were kept for further experimentation, and the other two were discarded. The worst learning rate for each of the remaining activation functions was also replaced with another learning rate, trying to narrow down the region of learning rates for which the training of the network performs better. For the second round of trials, the network was trained for 10 epochs. 
+After the initial trials, the best two activation functions were kept for further experimentation, and the other two were discarded. The learning rates were also narrowed down, closer to the best performing learning rate. All activation functions, learning rates and training epochs used during the investigation can be seen in Table \ref{ac-overview}.
 
-The second round informed the activation function to be used for the last round, and again the learning rates were narrowed down further. The last set of trials, for the activation functions, the network was trained for 20 epochs. The learning rate that resulted in best performance was then used for the during the later experiments. 
+Again, after the second round, the learning rates were modified before the last round of training. As the two last activation functions performed similarly, both were tested in the final trials. The combination of learning rate and activation functions, that resulted in best performance, was then used for the during the next set of experiments, see Section \ref{filter-methods}.
 
-The activation functions and learning rates were tested using two convolutional layers with 3x3 kernels and 24 feature maps. The model also had a 3x3 pooling layer with stride of two after each convolutional layer. After the tensors were flattened, the network had two fully connected layers before a final softmax classification layer. The network used the Adam optimizer. 
+\begin{table}[h]
+	\centering
+	\caption{Showing the combinations of activation functions, learning rates and training duration in Epochs, for the three rounds of experimentation.}
+	\label{ac-overview}
+	\begin{tabular}{@{}cccc@{}}
+		\toprule
+		Round & Learning Rates & Activation Fn. & Training Epochs \\ \midrule
+		1 & 5e-4, 3e-3, 0.01 & ReLu, Elu, Tanh, Sigmoid & 5 \\
+		2 & 1e-4, 9e-4 & ReLu, Elu & 10 \\
+		3 & 4e-4, 7e-4 & ReLu, Elu & 15 \\ \bottomrule
+	\end{tabular}
+\end{table}
 
-\subsubsection{Filter Sizes and Feature Maps}
+The effect of the learning rates and non-linear activation functions on the aforementioned network were tested with 3x3 kernels and 24 feature maps. The network did not use any kind of L2 regularization, batch normalization or drop out. 
 
-The kernels are responsible for extracting features from the input data, and their sizes as well the the number of feature maps output will affect the performance of a network. 
+The procedure used to train the network is presented in Section .
 
-The network was trained using a number of combinations of kernel sizes and feature maps in each of the convolutional layers. The size of kernels were 3, 5 and 7, whereas the number of feature maps were 16, 24 and 32. Here as well, the best combination was chosen for the following trials.
+\subsubsection{Filter Sizes and Feature Maps} \label{filter-methods} 
 
-The architecture and training parameters remained the same as for the experiments on the activation functions, except the ELU activation function was used with a learning rate of 0.0004. 
+During the second part of the experimentation, the network was trained with nine combinations of kernel sizes and feature maps. The size of kernels were 3, 5 and 7, whereas the number of feature maps were 16, 24 and 32. During the first round the network was trained for 5 epoch, using the ELU activation function was used with a learning rate of 0.0004. 
+
+The network was supposed to be trained in three rounds, incrementally determining the best combination of kernel size and number of feature maps. However, due to exceedingly long training times and swap memory warnings (during the two most expensive trials) the two later rounds were not completed. 
+
+The three combinations with 32 feature maps all performed similarly, but at very different completion times and computational cost. See Table \ref{filter-res} for execution times. The 3x3 kernel and 32 feature maps were used for the remaining experimentation. 
 
 \subsubsection{Regularization and Normalization}
 
-Without any normalization or regularization significant over-fitting can occur during training of the network. 
+The last set of experiments 
 
-As with the previous experiments, short trials were run using coarse set of parameters. Using three nested loops, the network was trained using eight different combinations of batch normalization, drop out and L2 weight decay. The batch normalization added to the convolutional layers were either true or false, the L2 decay was none or 0.0005 and the keep probability of the dropout layers were either 1.0 (keep all) or 0.5. The network was trained for 5 epochs during the first set of trials. 
+As with the previous experiments, short first round trials were run using coarse set of parameters. The network was trained using eight different combinations of batch normalization, drop out and L2 weight decay. The regularization and normalization parameters used in all three rounds can be seen in Table \ref{reg-table}. The batch normalization only applied to the convolutional layers and the dropout 
 
+Using three nested loops, the network was trained using eight different combinations of batch normalization, drop out and L2 weight decay. The batch normalization added to the convolutional layers were either true or false, the L2 decay was none or 0.0005 and the keep probability of the dropout layers were either 1.0 (keep all) or 0.5. The network was trained for 5 epochs during the first set of trials. 
 
+The third round of training used 20 epochs instead of 15, as the regularization slowed down the training.
 
-introduced dropout and data augmentation
+\begin{table}[h]
+	\centering
+	\caption{Showing the combinations of parameters used during the normalization and regularization investigative rounds.}
+	\label{reg-table}
+	\begin{tabular}{@{}ccccc@{}}
+		\toprule
+		Round & Batch Norm. \tablefootnote{Batch Normalization} & Dropout Prob. \tablefootnote{Dropout keep probability} & L2 Reg. \tablefootnote{L2 Regularization Weight Decay} & Training Epochs \\ \midrule
+		1 & True, False & None, 0.5 & None, 5e-4 & 5 \\
+		2 & True & 0.45, 0.55 & 5e-4 & 10 \\
+		3 & True & 0.5 & 5e-4, None & 20 \\ \bottomrule
+	\end{tabular}
+\end{table}
 
-trained for 40 epochs
- 
+The training runs were done with 3x3 kernels and 32 feature maps in each of the convolutional layers. 
+
+\subsection{Network Training and Data Collection}
+
+placeholder data, batch size 50
+
+TensorBoard 
+Normalized running means - numpy
+custom model class
+evaluate validation every 100 step, plus first and last step
+\texttt{tf.softmax\_cross\_entropy\_with\_logits}
+
+\texttt{tf.train.AdamOptimizer}
  
 \section{Results and Discussion}
+
+All tests were performed on a macOS Sierra 10.12. operating system, with an Intel i5 2.6 GHz processor and 8 GB DDR3 memory with 1600 MHz. All trials were executed inside a custom mlp python virtual environment. 
 
 \subsection{Activation Functions}
 
@@ -206,7 +246,7 @@ The number of feature maps had a greater impact on the training performance, com
 \begin{table}[h]
 	\centering
 	\caption{Showing the training execution time, in minutes, for 5 epochs for different kernel sizes and number of feature maps in the convolutional layers.}
-	\label{my-label}
+	\label{filter-res}
 	\begin{tabular}{@{}ccccc@{}}
 		\toprule
 		\multicolumn{2}{c}{Feature Maps} & 16 & 24 & 32 \\ \midrule
