@@ -220,7 +220,7 @@ evaluate validation every 100 step, plus first and last step
 
 \texttt{tf.train.AdamOptimizer}
  
-\section{Results and Discussion}
+\section{Results}
 
 All tests were performed on a macOS Sierra 10.12. operating system, with an Intel i5 2.6 GHz processor and 8 GB DDR3 memory with 1600 MHz. All trials were executed inside a custom mlp Python 2.7 virtual environment. 
 
@@ -256,7 +256,16 @@ Compared to the training of the fully connected network, presented in Section \r
 
 \subsection{Filter Sizes and Feature Maps}
 
-The number of feature maps had a greater impact on the training performance, compared to the size of the kernels. As shown in Figure , the three best performing trials were all using convolutional layers with 32 feature maps. 
+The number of feature maps had a greater impact on the training performance, compared to the size of the kernels. As shown in Figure \ref{kernel_res}, the three best performing trials were all using convolutional layers with 32 feature maps. 
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{kernel_res}
+	\caption{Showing the training and validation set errors for different kernel sizes and number of feature maps in each convolutional layer. fs = 'Filter Size', nf = 'number of filters'. }
+	\label{kernel_res}
+	\centering
+\end{figure}
+
+In contrast to the similar performance of the networks with 32 feature maps, the computational cost were sizable larger when trained using larger kernels. With a 10.7\% improvement in training set error, the CNN with the 7x7 kernel needed more than twice the execution time of the 3x3 CNN.
 
 \begin{table}[h]
 	\centering
@@ -270,6 +279,8 @@ The number of feature maps had a greater impact on the training performance, com
 		& \multicolumn{1}{c|}{7x7} & 39.9 & 57.9 & 67.0 \\ \bottomrule
 	\end{tabular}
 \end{table}
+
+Similarly to the study of the depth and width of the hidden layers in the fully connected neural network, additional hidden units, or connections, offer a small overall improvement in the training performance. The improvements come at a high computational cost, and are potentially only relevant to the state-of-the-art networks willing to sacrifice time and additional resources to achieve small performance improvements. 
 
 \subsubsection{Regularization and Normalization}
 
