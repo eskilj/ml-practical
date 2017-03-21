@@ -21,6 +21,21 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{long2015fully}
+J.~Long, E.~Shelhamer, and T.~Darrell, ``Fully convolutional networks for
+  semantic segmentation,'' in \emph{Proceedings of the IEEE Conference on
+  Computer Vision and Pattern Recognition}, 2015, pp. 3431--3440.
+
+\bibitem{Collobert}
+\BIBentryALTinterwordspacing
+R.~Collobert and J.~Weston, ``A unified architecture for natural language
+  processing: Deep neural networks with multitask learning,'' in
+  \emph{Proceedings of the 25th International Conference on Machine Learning},
+  ser. ICML '08.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM,
+  2008, pp. 160--167. [Online]. Available:
+  \url{http://doi.acm.org/10.1145/1390156.1390177}
+\BIBentrySTDinterwordspacing
+
 \bibitem{cifar10}
 \BIBentryALTinterwordspacing
 The cifar-10 and cifar-100 dataset. [Online]. Available:

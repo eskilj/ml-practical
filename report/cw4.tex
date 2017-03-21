@@ -26,24 +26,27 @@
 
 \section{Introduction}
 
-Fully connected networks offer good performance at a relatively efficient computational cost, however, current state-of-the-art networks are all convolutional neural networks (CNN). This report presents a series of experiments set to optimize the training performance of a CNN on a image classification task, using the CIFAR 10 dataset \cite{cifar10}.
+Fully connected neural networks are trained at a relatively low computational cost, and they have been used in machine learning for quite some time. However, current state-of-the-art networks are all convolutional neural networks (CNNs) \cite{long2015fully}. The high performance is (typically) achieved as the kernels in the convolutional layers extract features from the input data via their spacial locality. A common use case is object recognition in images, but can also be used in other tasks such as natural language processing \cite{Collobert}. 
 
-Building on a baseline set of experiments, done with a fully connected neural network, 
+Preliminary work has been done on the same data set using a fully connected neural network. More details are presented in the Background section (\ref{background}) below. 
 
-the presented procedure tries to improve the performance of the more advanced methods used here. 
+CNNs introduce a significantly larger number of weights and connections, compared to a fully connected network, which means the parameters of the network must be carefully tuned to ensure adequately successful training. 
 
-In addition to improving the overall performance of the training of the network, the experiments were guided by a goal of 70\% accuracy on the test data set. As a result, the methodology and incremental improvements to the model were made on these grounds. 
+This report presents a series of experiments set to investigate how some key components of a CNN affect it's overall performance during training. Furthermore, the (optimal) findings from each experiment are integrated into the network for the subsequent experiments, trying to improve the performance of the network as much as possible. The following aspects of the CNN are investigated:
 
+\begin{itemize}
+	
+	\item How does the size of kernels and number of feature maps in the convolutional layers affect the training? Time, performance, computational resources
+	
+	\item How does the choice of activation function impact the performance of the network?
+	
+	\item What type, and magnitude, of regularization is needed to overcome potential over-fitting of the CNN?
+	
+\end{itemize}
 
+optimize the training performance of a CNN on a image classification task, using the CIFAR 10 dataset \cite{cifar10}. In addition to improving the overall performance of the training of the network, the experiments were guided by a goal of 70\% accuracy on the test data set. As a result, the methodology and incremental improvements to the model were made on these grounds. 
 
-
-what is being investigated:
-activation functions
-learning rates
-number of feature maps and kernel sizes
-regularization (bartch norm, Local Response Norm. and dropout)
-
-\subsection{Background}
+\subsection{Background} \label{background}
 
 Preliminary experiments have been conducted on the same data, using a fully connected neural network. The network was trained using a variety of activation functions, hidden layer depths and widths as well as learning rate scheduler. 
 
@@ -71,13 +74,18 @@ The results showed that the ELU activation function outperformed the other three
 
 \section{Methodology}
 
-Establishing a baseline model, and choosing the appropriate algorithms to include, can be a daunting task. Even a relatively small CNN has a large number of tunable parameters, and it can be difficult to know where to begin. The section presents the baseline model chose for the experiments, the procedure used to train the network and the parameters used. 
+1. Object of study
+2. Treatment for the object (what do to object)
+3. Procedure to collect data
+4. Procedure to analyze data
 
-\subsection{The Baseline Model}
+i - The model, and why it was chosen
 
-The default baseline model used has two convolutional layers, two fully-connected layers and finally a softmax classification layer. The network also had two 2x2 pooling layers after each convolutional layer. 
+"Liberty apple cultivar was chosen for this study, because it is highly prone to browning."
 
-Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer was used throughout the investigation. The optimizer was used with varying learning rates, but with beta1=0.9, beta2=0.999 and epsilon = 1e-8. (default parameters) 
+\subsection{The Network Architecture}
+
+A neural network with two convolutional and two fully connected hidden layers was chosen for this study. The network also had two max pooling layers, one after each convolutional layer, as well as a 10-way softmax output classification. 
 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{conv}
@@ -88,9 +96,9 @@ Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer 
 
 \subsubsection{Convolutional Layer}
 
-Convolutional neural networks use kernels, or filters, to take advantage of the spatial structure of it’s inputs. As the kernel is moved across the input image, the values of the resulting feature map are determined by the values of the kernel.
-
 The convolution was implemented using the \texttt{tf.nn.conv2d} method from Tensorflow(tf) with stride of 1 and no padding (\texttt{padding='SAME'}). 
+
+A truncated normal distribution was use to innitialize the kernels, and the biases were initialized to zero. See Section \ref{weights}, Weight and Biases, for the specific implementations in TensorFlow. 
 
 \subsubsection{Fully Connected Layer}
 
@@ -117,7 +125,7 @@ tf.nn.dropout
 
 \subsubsection{Batch Normalization}
 
-\subsubsection{Weights and Biases}
+\subsubsection{Weights and Biases} \label{weights}
 
 The weights used in both the convolutional and fully connected layers were initialized using a truncated normal distribution. The values were distributed with zero mean and a standard deviation of 0.1. Values more than two standard deviations away from the mean were dropped. The distributions were initialized with the tf.truncated\_normal method. 
 
@@ -126,6 +134,12 @@ The biases used were all initialized to zero using the tf.zeros method. Addition
 \subsection{Experimental Procedure}
 
 The procedure used to tune the performance of the network involved three stages. During the initial stage the network was trained for few epochs, with a coarse spread of hyper parameter and multiple algorithms were tested during this phase. The overall results from the initial trials informed the finer range of parameters used for additional training and further tuning of hyper parameters. The second stage involved longer training. The third stage, before the final testing, the model was trained for significantly longer, and only three varieties of the model were used. 
+
+
+The default baseline model used has two convolutional layers, two fully-connected layers and finally a softmax classification layer. The network also had two 2x2 pooling layers after each convolutional layer. 
+
+Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer was used throughout the investigation. The optimizer was used with varying learning rates, but with beta1=0.9, beta2=0.999 and epsilon = 1e-8. (default parameters) 
+
 
 \subsubsection{Activation Functions}
 

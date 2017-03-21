@@ -13,7 +13,7 @@ fig = plt.figure(figsize=(12, 6))
 ax1 = fig.add_subplot(1, 2, 1)
 ax2 = fig.add_subplot(1, 2, 2)
 
-for root, dirs, files in os.walk("../notebooks/tf-log/norm"):
+for root, dirs, files in os.walk("../notebooks/tf-log/final"):
     for file in files:
         if file.endswith(".npz"):
             path = os.path.join(root, file)
