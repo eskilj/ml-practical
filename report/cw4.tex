@@ -199,7 +199,7 @@ The third round of training used 20 epochs instead of 15, as the regularization 
 	\label{reg-table}
 	\begin{tabular}{@{}ccccc@{}}
 		\toprule
-		Round & Batch Norm. \tablefootnote{Batch Normalization} & Dropout Prob. \tablefootnote{Dropout keep probability} & L2 Reg. \tablefootnote{L2 Regularization Weight Decay} & Training Epochs \\ \midrule
+		Round & Batch Norm. & Dropout Prob. & L2 Reg. & Training Epochs \\ \midrule
 		1 & True, False & None, 0.5 & None, 5e-4 & 5 \\
 		2 & True & 0.45, 0.55 & 5e-4 & 10 \\
 		3 & True & 0.5 & 5e-4, None & 20 \\ \bottomrule
@@ -222,15 +222,28 @@ evaluate validation every 100 step, plus first and last step
  
 \section{Results and Discussion}
 
-All tests were performed on a macOS Sierra 10.12. operating system, with an Intel i5 2.6 GHz processor and 8 GB DDR3 memory with 1600 MHz. All trials were executed inside a custom mlp python virtual environment. 
+All tests were performed on a macOS Sierra 10.12. operating system, with an Intel i5 2.6 GHz processor and 8 GB DDR3 memory with 1600 MHz. All trials were executed inside a custom mlp Python 2.7 virtual environment. 
 
 \subsection{Activation Functions}
 
-After the model was trained with all four transformation functions, the ReLu and ELU performed significantly better than the sigmoid and hyperbolic tangent. The first 5 epoch trial showed that a learning rate of 0.01 was too large, and resulted in high total error and low accuracies around 0.1, which meant the final classifications were merely guesses. The lowest learning rate, 0.0005, resulted in the highest accuracies across all the activation functions, and the ReLu trial had a final validation accuracy of 70.3\%. 
+Training the network with the linear unit activation functions, ReLu and ELU, resulted in the stronger overall performance compared to the training outcome with the sigmoid or hyperbolic tangent. 
 
-During the second round of trials, the network was trained with the ReLu and ELU activation functions, with learning rates of 0.0009 and 0.0001. After training the network for 10 epochs, the performance decreased for both activation functions, suggesting the better learning rates were closer to 0.0005. The final trial was then run with learning rates of 0.0004 and 0.0007. 
+\begin{table}[h]
+	\centering
+	\caption{Showing the final validation classification accuracy  for the four activation functions, after 5 epochs, for different learning rates. The classification accuracies are reported as percentages.}
+	\label{ac-table}
+	\begin{tabular}{@{}c|cccc@{}}
+		\toprule
+		Learning Rate & ELU & ReLu & Tanh & Sigmoid \\ \midrule
+		5e-4 & 69.5 & 70.27 & 67.7 & 46.9 \\
+		3e-3 & 62.2 & 61.3 & 10.0 & 10.0 \\
+		0.01 & 10.0 & 10.0 & 10.0 & 10.0 \\ \bottomrule
+	\end{tabular}
+\end{table}
 
-The last set of trials gave very similar results, see Figure \ref{ac_res}. The highest validation accuracy was 71.6\%, by ELU with the learning rate of 0.0004, and the lowest was 69.7\% by ReLu with the learning rate of 0.0007. Although the validation accuracy was over 70\%, the training set accuracies were much higher, which indicates a high degree of over-fitting. The over-fitting was also reflected in the validation set errors, as can be seen in Figure. 
+The lowest learning rate, 0.0005, resulted in the highest classification accuracies across all the activation functions, and the ReLu trial had a final validation accuracy of 70.3\%. Training the network with a learning rate of 0.01 resulted in high total error and very low accuracies. In a 10-way classification task, 10\% accuracy means the final output are guesses, and no (useful) learning has occurred.
+
+The training of the network during the final two rounds resulted in comparable final error and classification accuracies, see Figure \ref{ac_res}. The highest validation accuracy was 71.6\%, by ELU with the learning rate of 0.0004, and the lowest was 69.7\% by ReLu with the learning rate of 0.0007. Although the validation accuracy was over 70\%, the training set accuracies were much higher, which indicates a high degree of over-fitting. The over-fitting was also reflected in the validation set errors.
 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{ac_res}
@@ -238,6 +251,8 @@ The last set of trials gave very similar results, see Figure \ref{ac_res}. The h
 	\label{ac_res}
 	\centering
 \end{figure}
+
+Compared to the training of the fully connected network, presented in Section \ref{background}, the choice of the activation functions effect the training performance of the CNN and the fully connected network in similar way. 
 
 \subsection{Filter Sizes and Feature Maps}
 
@@ -256,9 +271,12 @@ The number of feature maps had a greater impact on the training performance, com
 	\end{tabular}
 \end{table}
 
-
-
 \subsubsection{Regularization and Normalization}
+
+
+
+\section{Discussion}
+
 
 \section{Conclusion}
 
