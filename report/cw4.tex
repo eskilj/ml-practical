@@ -37,15 +37,15 @@ This report presents a series of experiments set to investigate how some key com
 
 \begin{itemize}
 	
-	\item How does the size of kernels and number of feature maps in the convolutional layers affect the training? Time, performance, computational resources
+	\item How does the size of kernels and number of feature maps in the convolutional layers affect the training? Different sizes of kernels, and number of feature maps will likely impact the computational cost of the network, but could a potential performance improvement be justified by the additional cost?
 	
-	\item How does the choice of activation function impact the performance of the network?
+	\item How does the choice of activation function impact the performance of the network? More specifically, how will combinations of learning rates and non-linear activation functions affect the training of the network? 
 	
-	\item What type, and magnitude, of regularization is needed to overcome potential over-fitting of the CNN? Without any normalization or regularization significant over-fitting can occur during training of the network. MORE +++
+	\item What type, and magnitude, of regularization is needed to overcome over-fitting of the CNN? Without any normalization or regularization significant over-fitting will likely occur. How can the performance of the network be maintained, while simultaneously reduce the amount of over-fitting?
 	
 \end{itemize}
 
-optimize the training performance of a CNN on a image classification task, using the CIFAR 10 dataset \cite{cifar10}. In addition to improving the overall performance of the training of the network, the experiments were guided by a goal of 70\% accuracy on the test data set. As a result, the methodology and incremental improvements to the model were made on these grounds. 
+In addition to improving the overall performance of the training of the network, the experiments were guided by a goal of 70\% accuracy on the validation data set. As a result, the methodology and incremental improvements to the model were made on these grounds. 
 
 \subsection{Background} \label{background}
 
@@ -67,43 +67,40 @@ The results showed that the ELU activation function outperformed the other three
 
 \subsubsection{Hidden layers}
 
+Besides the one outsider, the training data shows a very similar performance for remaining five configurations. The two best trials were both from the models with three hidden layers.
+
 \subsubsection{Learning Rate Schedule}
 
-\section{Network Architecture}
-
+The results show that the training with the initial learning rate of 0.025 and 0.05 performed significantly better than the other initial learning rates (besides 0.02 and 0.03). As the error increases for learning rates lower than 0.025, as well as for learning rates over 0.05, it seems plausible that the optimal initial learning rate lies between 0.025 and 0.05 for the current model. 
 
 
 \section{Methodology}
-
-2. Treatment for the object (what do to object)
-3. Procedure to collect data
-4. Procedure to analyze data
 
 
 \subsection{The Network Architecture}
 
 A neural network with two convolutional and two fully connected hidden layers was chosen for this study. The network also had two max pooling layers, one after each convolutional layer, as well as a 10-way softmax output classification. 
 
-Why this model?
+A model with only two convolutional layers were chosen due to time and computational resources available. Two convolutional layers allowed for observation of the added performance, while not making the network exceedingly costly to train. 
 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{conv}
-	\caption{Showing a visual representation of the model used, from TensorBoard.}
+	\caption{Showing a visual representation of the convolutional neural network used.}
 	\label{conv}
 	\centering
 \end{figure}
 
 \subsubsection{Convolutional Layer}
 
-The convolution was implemented using the \texttt{tf.nn.conv2d} method from TensorFlow (tf) with stride of 1 and no padding (\texttt{padding='SAME'}). The convolution operation was executed on the layer inputs together with the kernels (using the specified stride and padding). Both the layer inputs and the kernels were TensorFlow tensors, and the result of the convolutional operation was also a TensorFlow tensor. 
+The convolution in the convolutional layer was implemented using the \texttt{tf.nn.conv2d} method from TensorFlow (\texttt{tf}) with stride of 1 and no padding (\texttt{padding='SAME'}). The convolution operation was executed on the layer inputs together with the kernels (using the specified stride and padding). Both the layer inputs and the kernels were TensorFlow tensors, and the result of the convolutional operation was also a TensorFlow tensor. 
 
-The biases were added to the tensor after the convolution. In the convolutional layers where batch normalization was specified, ... . Finally, an activation function was applied to the tensor, before passing the output on to the next layer. 
+The biases were added to the tensor after the convolution. In the convolutional layers where batch normalization was specified, the tensor was normalized immediately after the biases were added to the convolutional tensor. Finally, an activation function was applied to the tensor, before passing the output on to the next layer. 
 
 A truncated normal distribution was use to initialize the kernels, and the biases were initialized to zero. See Section \ref{weights}, Weight and Biases, for the specific implementation in TensorFlow. 
 
 \subsubsection{Fully Connected and Output prediction Layer}
 
-The fully connected and the classification output layers were implemented using the same class, as only a few factors separate the behavior of the two. A constant halving of the number of hidden units were integrated into all the fully connected layers, except the output prediction layer which had a 10-was output.
+The fully connected and the classification output layers were implemented using the same class, as only a few factors separate the behavior of the two. A constant halving of the number of hidden units were integrated into all the fully connected layers, except the output prediction layer which had a 10-way output.
 
 The weights and biases were initialized in the same as mentioned for the convolutional layers, only the weights for the affine layers were two dimensional. 
 
@@ -140,15 +137,13 @@ where \(\mu_i\) is the batch mean, \(\sigma_i^2\) is the batch variance, \(\gamm
 
 The weights used in both the convolutional and fully connected layers were initialized using a truncated normal distribution. The values were distributed with zero mean and a standard deviation of 0.1. Values more than two standard deviations away from the mean were dropped. The distributions were initialized with the \texttt{tf.truncated\_normal} method. 
 
-The biases used were all initialized to zero using the tf.zeros method. Additionally, the weights and biases were added to the TensorFlow. graph using  tf.Variable().
+The biases used were all initialized to zero using the \texttt{tf.zeros} method. Additionally, the weights and biases were added to the TensorFlow graph using  \texttt{tf.Variable}.
 
 \subsection{Experimental Procedure}
 
-The procedure used to tune the performance of the network involved three stages. During the initial stage the network was trained for few epochs, with a coarse spread of hyper parameter and multiple algorithms were tested during this phase. The overall results from the initial trials informed the finer range of parameters used for additional training and further tuning of hyper parameters. The second stage involved longer training. The third stage, before the final testing, the model was trained for significantly longer, and only three varieties of the model were used. 
+The procedure used to tune the performance of the network involved three stages. During the initial stage the network was trained for few epochs, with a coarse spread of hyper parameter and multiple algorithms were tested during this phase. The overall results from the initial trials informed the finer range of parameters used for additional training and further tuning of hyper parameters. The second stage involved longer training. The third stage, before the final testing, the model was trained for significantly longer, and only a couple varieties of the model were used. 
 
 The default baseline model used has two convolutional layers, two fully-connected layers and finally a softmax classification layer. The network also had two 2x2 pooling layers after each convolutional layer. 
-
-Instead of a learning rate scheduler, the Adam adaptive learning rate optimizer was used throughout the investigation. The optimizer was used with varying learning rates, but with beta1=0.9, beta2=0.999 and epsilon = 1e-8. (default parameters) 
 
 \subsubsection{Activation Functions}
 
@@ -185,8 +180,6 @@ The three combinations with 32 feature maps all performed similarly, but at very
 
 \subsubsection{Regularization and Normalization}
 
-The last set of experiments 
-
 As with the previous experiments, short first round trials were run using coarse set of parameters. The network was trained using eight different combinations of batch normalization, drop out and L2 weight decay. The regularization and normalization parameters used in all three rounds can be seen in Table \ref{reg-table}. The batch normalization only applied to the convolutional layers and the dropout 
 
 Using three nested loops, the network was trained using eight different combinations of batch normalization, drop out and L2 weight decay. The batch normalization added to the convolutional layers were either true or false, the L2 decay was none or 0.0005 and the keep probability of the dropout layers were either 1.0 (keep all) or 0.5. The network was trained for 5 epochs during the first set of trials. 
@@ -210,15 +203,11 @@ The training runs were done with 3x3 kernels and 32 feature maps in each of the 
 
 \subsection{Network Training and Data Collection}
 
-placeholder data, batch size 50
+The TensorFlow graph was built using data placeholder of batch size 50. The progress of the training was visualized using TensorBoard, a visualization feature of TensorFlow. The batch normalized training data was also written to disk using numpy's savez. 
 
-TensorBoard 
-Normalized running means - numpy
-custom model class
-evaluate validation every 100 step, plus first and last step
-\texttt{tf.softmax\_cross\_entropy\_with\_logits}
+During training, the validation set was evaluated every 100 steps, as well as the first as last step. The validation set was not evaluated every step due to the significant computational cost that incurs. 
 
-\texttt{tf.train.AdamOptimizer}
+The network prediction output was determined using the \texttt{tf.softmax\_cross\_entropy\_with\_logits} from TensorFlow.  This also meant the softmax could be omitted in the final affine layer in the network. This investigation did not make use of a explicit learning rate scheduler, but the 'self-tuning' Adam Optimizer, \texttt{tf.train.AdamOptimizer} in TensorFlow, was used. The optimizer was used with varying learning rates, but with beta1=0.9, beta2=0.999 and epsilon = 1e-8 (default parameters) throughout the investigation. 
  
 \section{Results}
 
@@ -284,15 +273,29 @@ Similarly to the study of the depth and width of the hidden layers in the fully 
 
 \subsubsection{Regularization and Normalization}
 
+The combination of batch normalization in the convolutional layers, L2 weight decay and 50\% dropout resulted in the greatest reduction of over-fitting, see Figure \ref{norm_diff}. Although the overall rate of training decreased, the gap between the training and validation set accuracies were reduced with each additional type of regularization. 
 
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{norm_diff}
+	\caption{Showing the training set accuracy, and the difference between the traing and validation set accuracies for different normalization and regularization methods. } 
+	\label{norm_diff}
+	\centering
+\end{figure}
 
-\section{Discussion}
+Comparing the best performing trial from the Activation Functions Section, and the fully regularized and normalized network, the over-fitting is almost completely removed, see Figure \ref{before_after}. Even though the performance has not increased (when trained over similar number of epochs), the performance of the network could be improved further by repeating the optimization cycle shown in this report. Moreover, other forms of regularizations could be introduced to the training, such as data augmentation. 
 
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{before_after}
+	\caption{Showing the training and validation set accuracy of the regularized and normalized network on the left, and the non-normalized accuracies on the right. The plot on the right is the best performing trial from the first set of experiments. } 
+	\label{before_after}
+	\centering
+\end{figure}
 
 \section{Conclusion}
 
-\section{Future Work}
+This report has presented a set of experiments, or a strategy, that can be used to improve the validity of a convolutional neural network. Through small iterations in parameter-space, and by introducing appropriate tools to reduce over-fitting, the overall performance of the network showed incremental improvements. 
 
+Additional investigations could have gone into the use of data augmentation, as well as more advanced use of kernel sizes and feature maps in different convolutional layers. However, if the presented strategy for training optimization was applied to the network repeatedly, the performance would likely improve further. 
 
 \clearpage
 \medskip

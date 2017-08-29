@@ -63,3 +63,4 @@ target/
 /.idea/
 /notebooks/tf-log/
 /tf-log/
+/data/
