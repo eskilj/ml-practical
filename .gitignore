@@ -51,9 +51,6 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-
 # Sphinx documentation
 docs/_build/
 
@@ -63,3 +60,5 @@ target/
 /.idea/
 /notebooks/tf-log/
 /tf-log/
+/report/
+/courseworks/
